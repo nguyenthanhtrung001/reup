@@ -3,8 +3,8 @@ package http
 import (
 	"regexp"
 
-	"book-store/internal/user/usecase"
-	"book-store/pkg/response"
+	"reup/internal/user/usecase"
+	"reup/pkg/response"
 )
 
 type registerRequest struct {

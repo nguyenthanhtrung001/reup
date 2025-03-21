@@ -1,9 +1,9 @@
 package mogo
 
 import (
-	"book-store/internal/book/repository"
-	"book-store/internal/models"
 	"context"
+	"reup/internal/book/repository"
+	"reup/internal/models"
 
 	"go.mongodb.org/mongo-driver/bson"
 )

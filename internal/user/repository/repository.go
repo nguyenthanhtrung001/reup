@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 
-	"book-store/internal/models"
-	"book-store/pkg/paginator"
+	"reup/internal/models"
+	"reup/pkg/paginator"
 )
 
 type Repository interface {

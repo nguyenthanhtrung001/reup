@@ -1,9 +1,9 @@
 package http
 
 import (
-	"book-store/internal/book/usecase"
-	"book-store/internal/models"
-	"book-store/pkg/paginator"
+	"reup/internal/book/usecase"
+	"reup/internal/models"
+	"reup/pkg/paginator"
 )
 
 type bookRequest struct {

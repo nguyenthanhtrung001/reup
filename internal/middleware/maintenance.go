@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"book-store/pkg/response"
+	"reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

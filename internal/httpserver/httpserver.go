@@ -8,7 +8,7 @@ import (
 	"syscall"
 )
 
-func (srv HTTPServer)  Run() error {
+func (srv HTTPServer) Run() error {
 	srv.mapHandlers()
 
 	ctx := context.Background()

@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 
-	"book-store/internal/models"
+	"reup/internal/models"
 )
 
 // NewScope creates a new scope.

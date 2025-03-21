@@ -1,12 +1,12 @@
 package http
 
 import (
-	"book-store/internal/models"
-	"book-store/internal/user/usecase"
-	pkgErrors "book-store/pkg/errors"
-	"book-store/pkg/jwt"
-	"book-store/pkg/paginator"
-	"book-store/pkg/response"
+	"reup/internal/models"
+	"reup/internal/user/usecase"
+	pkgErrors "reup/pkg/errors"
+	"reup/pkg/jwt"
+	"reup/pkg/paginator"
+	"reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

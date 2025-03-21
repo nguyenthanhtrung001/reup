@@ -1,6 +1,6 @@
 package http
 
-import pkgErrors "book-store/pkg/errors"
+import pkgErrors "reup/pkg/errors"
 
 var (
 	errMissBody             = pkgErrors.NewHTTPError(3000, "Invalid request payload")

@@ -3,7 +3,7 @@ package consumer
 import (
 	"context"
 
-	"book-store/pkg/rabbitmq"
+	"reup/pkg/rabbitmq"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )

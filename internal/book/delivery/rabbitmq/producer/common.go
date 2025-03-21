@@ -1,8 +1,8 @@
 package producer
 
 import (
-	rmqDelivery "book-store/internal/book/delivery/rabbitmq"
-	rmqPkg "book-store/pkg/rabbitmq"
+	rmqDelivery "reup/internal/book/delivery/rabbitmq"
+	rmqPkg "reup/pkg/rabbitmq"
 )
 
 // Run runs the producer

@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 
-	"book-store/config"
-	"book-store/internal/appconfig/mongo"
-	"book-store/internal/appconfig/redis"
-	"book-store/internal/consumer"
-	pkgCrt "book-store/pkg/encrypter"
-	pkgLog "book-store/pkg/log"
-	"book-store/pkg/rabbitmq"
+	"reup/config"
+	"reup/internal/appconfig/mongo"
+	"reup/internal/appconfig/redis"
+	"reup/internal/consumer"
+	pkgCrt "reup/pkg/encrypter"
+	pkgLog "reup/pkg/log"
+	"reup/pkg/rabbitmq"
 )
 
 func main() {
@@ -49,7 +49,13 @@ func main() {
 		panic(err)
 	}
 
-	if err := consumer.NewServer(l, conn, db, redisClient, crp).Run(); err != nil {
+	if err := consumer.NewServer(l, conn, db, redisClient, crp,
+		consumer.TeleCredentials{
+			BotKey: cfg.Telegram.BotKey,
+			ChatIDs: consumer.ChatIDs{
+				ReportBug:     cfg.Telegram.ChatIDs.ReportBug,
+				ReportPayment: cfg.Telegram.ChatIDs.ReportPayment,
+			}}).Run(); err != nil {
 		l.Fatalf(ctx, "Failed to run consumer server: %v", err)
 	}
 	l.Info(ctx, "Consumer server is running successfully")

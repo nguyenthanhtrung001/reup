@@ -1,7 +1,7 @@
 package job
 
 import (
-	"book-store/pkg/cron"
+	"reup/pkg/cron"
 )
 
 func (h Handler) Register() []cron.JobInfo {

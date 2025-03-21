@@ -4,8 +4,8 @@ import (
 	"encoding/base64"
 	"encoding/json"
 
-	"book-store/internal/models"
-	pkgCrt "book-store/pkg/encrypter"
+	"reup/internal/models"
+	pkgCrt "reup/pkg/encrypter"
 )
 
 func CreateApiKey(scope models.Scope, ecnrypter pkgCrt.Encrypter) (string, error) {

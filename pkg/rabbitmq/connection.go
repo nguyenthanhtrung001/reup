@@ -149,7 +149,7 @@ func (c Connection) channel() (*amqp.Channel, error) {
 }
 
 func (c *Connection) Channel() (*Channel, error) {
-	log.Println("Getting channel")
+
 	ch, err := c.channel()
 	if err != nil {
 		return nil, err

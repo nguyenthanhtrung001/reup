@@ -3,7 +3,7 @@ package repository
 import (
 	"time"
 
-	"book-store/pkg/paginator"
+	"reup/pkg/paginator"
 )
 
 type RegisterOptions struct {

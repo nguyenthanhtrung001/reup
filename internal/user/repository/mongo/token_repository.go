@@ -1,6 +1,6 @@
 package mongo
 
-import "book-store/pkg/mongo"
+import "reup/pkg/mongo"
 
 const (
 	userTokenCollection = "user_tokens"

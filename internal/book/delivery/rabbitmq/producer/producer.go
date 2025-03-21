@@ -1,10 +1,10 @@
 package producer
 
 import (
-	rabb "book-store/internal/book/delivery/rabbitmq"
-	"book-store/pkg/rabbitmq"
 	"context"
 	"encoding/json"
+	rabb "reup/internal/book/delivery/rabbitmq"
+	"reup/pkg/rabbitmq"
 )
 
 // PubBookRandom implements Producer.

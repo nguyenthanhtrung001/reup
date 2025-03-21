@@ -4,11 +4,11 @@ import (
 	"context"
 	"time"
 
-	"book-store/internal/models"
-	"book-store/internal/user/repository"
-	"book-store/pkg/jwt"
-	"book-store/pkg/mongo"
-	"book-store/pkg/paginator"
+	"reup/internal/models"
+	"reup/internal/user/repository"
+	"reup/pkg/jwt"
+	"reup/pkg/mongo"
+	"reup/pkg/paginator"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

@@ -1,19 +1,19 @@
 package schedule
 
 import (
-	bookJob "book-store/internal/book/delivery/job"
-	bookProd "book-store/internal/book/delivery/rabbitmq/producer"
-	bookMongo "book-store/internal/book/repository/mongo"
-	bookUsecase "book-store/internal/book/usecase"
-	"book-store/pkg/cron"
-	"book-store/pkg/jwt"
 	"context"
 	"os"
 	"os/signal"
+	bookJob "reup/internal/book/delivery/job"
+	bookProd "reup/internal/book/delivery/rabbitmq/producer"
+	bookMongo "reup/internal/book/repository/mongo"
+	bookUsecase "reup/internal/book/usecase"
+	"reup/pkg/cron"
+	"reup/pkg/jwt"
 	"syscall"
 )
 
-func (s Schedule) Start() error {
+func (s Scheduler) Start() error {
 	ctx := context.Background()
 	s.l.Info(ctx, "Starting scheduler")
 	if err := s.registerJobs(); err != nil {
@@ -33,7 +33,7 @@ func (s Schedule) Start() error {
 	return nil
 
 }
-func (s Schedule) registerJobs() error {
+func (s Scheduler) registerJobs() error {
 	// tạo wrapper cho các job
 	s.cron.SetFuncWrapper(s.jobWrapper)
 
@@ -67,7 +67,7 @@ func (s Schedule) registerJobs() error {
 	return nil
 }
 
-func (s Schedule) jobWrapper(f cron.HandleFunc) {
+func (s Scheduler) jobWrapper(f cron.HandleFunc) {
 	// đống gói toàn bộ job để gôm lỗi
 	defer func() {
 		if err := recover(); err != nil {

@@ -1,10 +1,10 @@
 package http
 
 import (
-	"book-store/internal/models"
-	"book-store/internal/user/usecase"
-	"book-store/pkg/paginator"
-	"book-store/pkg/response"
+	"reup/internal/models"
+	"reup/internal/user/usecase"
+	"reup/pkg/paginator"
+	"reup/pkg/response"
 )
 
 type listRequest struct {

@@ -1,10 +1,10 @@
 package mongo
 
 import (
-	"book-store/internal/user/repository"
-	"book-store/pkg/jwt"
-	"book-store/pkg/log"
-	"book-store/pkg/mongo"
+	"reup/internal/user/repository"
+	"reup/pkg/jwt"
+	"reup/pkg/log"
+	"reup/pkg/mongo"
 )
 
 type implRepository struct {

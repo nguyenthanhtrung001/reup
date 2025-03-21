@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"book-store/internal/models"
-	"book-store/pkg/paginator"
 	"context"
+	"reup/internal/models"
+	"reup/pkg/paginator"
 )
 
 type Repository interface {

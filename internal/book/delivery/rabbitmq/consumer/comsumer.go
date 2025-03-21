@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 
-	rmqDelivery "book-store/internal/book/delivery/rabbitmq"
+	rmqDelivery "reup/internal/book/delivery/rabbitmq"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )

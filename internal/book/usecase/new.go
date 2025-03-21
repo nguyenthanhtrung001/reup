@@ -1,12 +1,12 @@
 package usecase
 
 import (
-	prod "book-store/internal/book/delivery/rabbitmq/producer"
-	"book-store/internal/book/repository"
-	"book-store/internal/models"
-	"book-store/pkg/encrypter"
-	"book-store/pkg/log"
 	"context"
+	prod "reup/internal/book/delivery/rabbitmq/producer"
+	"reup/internal/book/repository"
+	"reup/internal/models"
+	"reup/pkg/encrypter"
+	"reup/pkg/log"
 )
 
 type UseCase interface {

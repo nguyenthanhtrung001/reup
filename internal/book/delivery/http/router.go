@@ -1,7 +1,7 @@
 package http
 
 import (
-	"book-store/internal/middleware"
+	"reup/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )

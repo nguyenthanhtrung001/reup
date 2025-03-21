@@ -1,11 +1,11 @@
 package mogo
 
 import (
-	"book-store/internal/book/repository"
-	"book-store/internal/models"
-	"book-store/pkg/mongo"
-	"book-store/pkg/paginator"
 	"context"
+	"reup/internal/book/repository"
+	"reup/internal/models"
+	"reup/pkg/mongo"
+	"reup/pkg/paginator"
 
 	"time"
 

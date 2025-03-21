@@ -3,10 +3,10 @@ package usecase
 import (
 	"context"
 
-	"book-store/internal/models"
-	"book-store/internal/user/repository"
-	"book-store/pkg/encrypter"
-	"book-store/pkg/log"
+	"reup/internal/models"
+	"reup/internal/user/repository"
+	"reup/pkg/encrypter"
+	"reup/pkg/log"
 )
 
 type UseCase interface {

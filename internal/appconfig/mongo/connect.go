@@ -6,9 +6,9 @@ import (
 	"log"
 	"time"
 
-	"book-store/config"
-	pkgCrt "book-store/pkg/encrypter"
-	"book-store/pkg/mongo"
+	"reup/config"
+	pkgCrt "reup/pkg/encrypter"
+	"reup/pkg/mongo"
 )
 
 const (

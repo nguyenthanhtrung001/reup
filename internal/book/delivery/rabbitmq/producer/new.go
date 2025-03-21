@@ -1,10 +1,10 @@
 package producer
 
 import (
-	rabb "book-store/internal/book/delivery/rabbitmq"
-	pkgLog "book-store/pkg/log"
-	"book-store/pkg/rabbitmq"
 	"context"
+	rabb "reup/internal/book/delivery/rabbitmq"
+	pkgLog "reup/pkg/log"
+	"reup/pkg/rabbitmq"
 )
 
 type Producer interface {

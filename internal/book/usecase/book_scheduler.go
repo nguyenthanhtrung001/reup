@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"book-store/internal/models"
 	"context"
+	"reup/internal/models"
 )
 
 // GetRandomBookTask implements UseCase.

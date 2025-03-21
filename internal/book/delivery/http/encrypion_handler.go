@@ -1,8 +1,8 @@
 package http
 
 import (
-	"book-store/pkg/response"
 	"context"
+	"reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

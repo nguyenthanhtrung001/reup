@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"book-store/pkg/paginator"
+	"reup/pkg/paginator"
 	"time"
 )
 

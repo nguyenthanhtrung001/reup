@@ -3,18 +3,19 @@ package consumer
 import (
 	"context"
 
-	"book-store/pkg/jwt"
-	"book-store/pkg/log"
-	"book-store/pkg/mongo"
-	"book-store/pkg/rabbitmq"
-	"book-store/pkg/redis"
+	"reup/pkg/jwt"
+	"reup/pkg/log"
+	"reup/pkg/mongo"
+	"reup/pkg/rabbitmq"
+	"reup/pkg/redis"
+	"reup/pkg/telegram"
 
-	bookConsumer "book-store/internal/book/delivery/rabbitmq/consumer"
-	bookProd "book-store/internal/book/delivery/rabbitmq/producer"
-	bookMongo "book-store/internal/book/repository/mongo"
-	bookUseCase "book-store/internal/book/usecase"
+	bookConsumer "reup/internal/book/delivery/rabbitmq/consumer"
+	bookProd "reup/internal/book/delivery/rabbitmq/producer"
+	bookMongo "reup/internal/book/repository/mongo"
+	bookUseCase "reup/internal/book/usecase"
 
-	pkgCrt "book-store/pkg/encrypter"
+	pkgCrt "reup/pkg/encrypter"
 )
 
 // Server is the consumer server
@@ -24,6 +25,16 @@ type Server struct {
 	db        mongo.Database
 	redis     redis.Client
 	encrypter pkgCrt.Encrypter
+	telegram  TeleCredentials
+}
+type TeleCredentials struct {
+	BotKey string
+	ChatIDs
+}
+
+type ChatIDs struct {
+	ReportBug     int64
+	ReportPayment int64
 }
 
 // NewServer creates a new consumer server
@@ -32,6 +43,7 @@ func NewServer(l log.Logger,
 	db mongo.Database,
 	redis redis.Client,
 	encrypter pkgCrt.Encrypter,
+	telegram TeleCredentials,
 ) Server {
 	return Server{
 		l:         l,
@@ -39,19 +51,26 @@ func NewServer(l log.Logger,
 		db:        db,
 		redis:     redis,
 		encrypter: encrypter,
+		telegram:  telegram,
 	}
 }
 
 // Run runs the consumer server
 func (s Server) Run() error {
 
+	chatIDs := telegram.ChatIDs{
+		ReportBug:     s.telegram.ChatIDs.ReportBug,
+		ReportPayment: s.telegram.ChatIDs.ReportPayment,
+	}
+	telegram := telegram.New(s.telegram.BotKey, chatIDs)
 	// Producer
 	bookProd := bookProd.New(s.l, s.conn)
 	if err := bookProd.Run(); err != nil {
 		s.l.Fatal(context.Background(), err)
 		return err
 	}
-
+	// Cac usecase su dung tele them o day
+	s.l.Fatal(context.Background(), telegram)
 	// Repositories
 
 	bookMongo := bookMongo.New(s.l, s.db, jwt.JWTMaker{})

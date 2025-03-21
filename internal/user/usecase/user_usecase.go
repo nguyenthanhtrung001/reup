@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 
-	"book-store/internal/models"
-	"book-store/internal/user/repository"
-	"book-store/pkg/jwt"
+	"reup/internal/models"
+	"reup/internal/user/repository"
+	"reup/pkg/jwt"
 )
 
 func (uc implUseCase) Register(ctx context.Context, input RegisterInput) error {

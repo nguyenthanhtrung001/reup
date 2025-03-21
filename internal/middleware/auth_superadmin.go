@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"book-store/pkg/jwt"
-	"book-store/pkg/response"
+	"reup/pkg/jwt"
+	"reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

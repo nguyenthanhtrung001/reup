@@ -1,13 +1,14 @@
 package main
 
 import (
-	"book-store/config"
-	"book-store/internal/appconfig/mongo"
-	"book-store/internal/schedule"
-	pkgCrt "book-store/pkg/encrypter"
-	pkgLog "book-store/pkg/log"
-	"book-store/pkg/rabbitmq"
+	"reup/config"
+	"reup/internal/appconfig/mongo"
+	"reup/internal/schedule"
+
 	"context"
+	pkgCrt "reup/pkg/encrypter"
+	pkgLog "reup/pkg/log"
+	"reup/pkg/rabbitmq"
 )
 
 func main() {
@@ -45,6 +46,13 @@ func main() {
 		Database:  db,
 		Encrypter: crp,
 		AMQPConn:  amqpConn,
+		Telegram: schedule.TeleCredentials{
+			BotKey: cfg.Telegram.BotKey,
+			ChatIDs: schedule.ChatIDs{
+				ReportBug:     cfg.Telegram.ChatIDs.ReportBug,
+				ReportPayment: cfg.Telegram.ChatIDs.ReportPayment,
+			},
+		},
 	}).Start()
 
 	if err != nil {

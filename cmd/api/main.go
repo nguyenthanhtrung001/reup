@@ -1,13 +1,13 @@
 package main
 
 import (
-	"book-store/config"
-	"book-store/internal/appconfig/mongo"
-	"book-store/internal/appconfig/redis"
-	"book-store/internal/httpserver"
-	pkgCrt "book-store/pkg/encrypter"
-	pkgLog "book-store/pkg/log"
-	"book-store/pkg/rabbitmq"
+	"reup/config"
+	"reup/internal/appconfig/mongo"
+	"reup/internal/appconfig/redis"
+	"reup/internal/httpserver"
+	pkgCrt "reup/pkg/encrypter"
+	pkgLog "reup/pkg/log"
+	"reup/pkg/rabbitmq"
 )
 
 // @title SSC Group API - SMM

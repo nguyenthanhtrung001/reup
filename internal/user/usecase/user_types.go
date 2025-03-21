@@ -3,8 +3,8 @@ package usecase
 import (
 	"time"
 
-	"book-store/internal/models"
-	"book-store/pkg/paginator"
+	"reup/internal/models"
+	"reup/pkg/paginator"
 )
 
 type RegisterInput struct {

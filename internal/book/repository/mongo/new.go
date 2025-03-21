@@ -1,10 +1,10 @@
 package mogo
 
 import (
-	"book-store/internal/book/repository"
-	"book-store/pkg/jwt"
-	"book-store/pkg/log"
-	"book-store/pkg/mongo"
+	"reup/internal/book/repository"
+	"reup/pkg/jwt"
+	"reup/pkg/log"
+	"reup/pkg/mongo"
 )
 
 type implRepository struct {

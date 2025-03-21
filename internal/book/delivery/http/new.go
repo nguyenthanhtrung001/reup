@@ -1,8 +1,8 @@
 package http
 
 import (
-	"book-store/internal/book/usecase"
-	"book-store/pkg/log"
+	"reup/internal/book/usecase"
+	"reup/pkg/log"
 
 	"github.com/gin-gonic/gin"
 )

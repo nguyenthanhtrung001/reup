@@ -3,9 +3,9 @@ package mongo
 import (
 	"context"
 
-	"book-store/internal/models"
-	"book-store/internal/user/repository"
-	pkgMongo "book-store/pkg/mongo"
+	"reup/internal/models"
+	"reup/internal/user/repository"
+	pkgMongo "reup/pkg/mongo"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

@@ -1,9 +1,9 @@
 package consumer
 
 import (
-	"book-store/internal/book/usecase"
-	pkgLog "book-store/pkg/log"
-	"book-store/pkg/rabbitmq"
+	"reup/internal/book/usecase"
+	pkgLog "reup/pkg/log"
+	"reup/pkg/rabbitmq"
 )
 
 // Consumer represents a consumer

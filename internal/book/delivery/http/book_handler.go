@@ -1,10 +1,10 @@
 package http
 
 import (
-	"book-store/internal/book/usecase"
-	"book-store/internal/models"
-	"book-store/pkg/paginator"
-	"book-store/pkg/response"
+	"reup/internal/book/usecase"
+	"reup/internal/models"
+	"reup/pkg/paginator"
+	"reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

@@ -3,7 +3,7 @@ package jwt
 import (
 	"context"
 
-	"book-store/internal/models"
+	"reup/internal/models"
 )
 
 type PayloadCtxKey struct{}

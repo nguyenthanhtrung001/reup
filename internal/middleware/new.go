@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	userUseCase "book-store/internal/user/usecase"
-	pkgCrt "book-store/pkg/encrypter"
-	"book-store/pkg/jwt"
-	"book-store/pkg/log"
+	userUseCase "reup/internal/user/usecase"
+	pkgCrt "reup/pkg/encrypter"
+	"reup/pkg/jwt"
+	"reup/pkg/log"
 )
 
 type Middleware struct {

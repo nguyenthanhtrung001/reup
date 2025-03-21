@@ -3,7 +3,7 @@ package mongo
 import (
 	"context"
 
-	"book-store/internal/models"
+	"reup/internal/models"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

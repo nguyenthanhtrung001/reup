@@ -1,10 +1,10 @@
 package http
 
 import (
-	"book-store/internal/models"
-	"book-store/pkg/jwt"
+	"reup/internal/models"
+	"reup/pkg/jwt"
 
-	pkgErrors "book-store/pkg/errors"
+	pkgErrors "reup/pkg/errors"
 
 	"github.com/gin-gonic/gin"
 )

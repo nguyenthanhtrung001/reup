@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"book-store/internal/models"
-	"book-store/pkg/paginator"
+	"reup/internal/models"
+	"reup/pkg/paginator"
 	"time"
 )
 

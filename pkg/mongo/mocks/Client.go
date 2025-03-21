@@ -5,8 +5,9 @@ package mocks
 import (
 	context "context"
 
+	mongo "reup/pkg/mongo"
+
 	mock "github.com/stretchr/testify/mock"
-	mongo "book-store/pkg/mongo"
 
 	mongo_drivermongo "go.mongodb.org/mongo-driver/mongo"
 )

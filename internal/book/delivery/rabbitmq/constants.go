@@ -1,6 +1,6 @@
 package rabbitmq
 
-import "book-store/pkg/rabbitmq"
+import "reup/pkg/rabbitmq"
 
 const (
 	GetRandomBookExcName = "book_random_exc"

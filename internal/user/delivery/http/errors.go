@@ -1,7 +1,7 @@
 package http
 
 import (
-	pkgErrors "book-store/pkg/errors"
+	pkgErrors "reup/pkg/errors"
 )
 
 var (

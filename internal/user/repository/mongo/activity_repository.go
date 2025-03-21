@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"book-store/internal/user/repository"
-	"book-store/pkg/mongo"
+	"reup/internal/user/repository"
+	"reup/pkg/mongo"
 
 	"go.mongodb.org/mongo-driver/bson"
 )

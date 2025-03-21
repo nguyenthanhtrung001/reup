@@ -3,7 +3,7 @@ package redis
 import (
 	"time"
 
-	"book-store/config"
+	"reup/config"
 
 	"github.com/redis/go-redis/v9"
 )

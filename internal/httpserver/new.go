@@ -1,13 +1,13 @@
 package httpserver
 
 import (
-	pkgCrt "book-store/pkg/encrypter"
-	pkgLog "book-store/pkg/log"
-	"book-store/pkg/mongo"
-	"book-store/pkg/rabbitmq"
+	pkgCrt "reup/pkg/encrypter"
+	pkgLog "reup/pkg/log"
+	"reup/pkg/mongo"
+	"reup/pkg/rabbitmq"
 
-	// "book-store/pkg/rabbitmq"
-	"book-store/pkg/redis"
+	// "reup/pkg/rabbitmq"
+	"reup/pkg/redis"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"book-store/internal/book/delivery/rabbitmq"
 	"context"
+	"reup/internal/book/delivery/rabbitmq"
 )
 
 func (uc implUseCase) pubRandomBookTask(ctx context.Context, msg string) error {

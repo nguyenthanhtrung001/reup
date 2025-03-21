@@ -1,27 +1,28 @@
 package httpserver
 
 import (
-	"book-store/pkg/jwt"
 	"context"
 	"net/http"
+	"reup/pkg/jwt"
+	"reup/pkg/telegram"
 
-	bookHTTP "book-store/internal/book/delivery/http"
-	userHTTP "book-store/internal/user/delivery/http"
+	bookHTTP "reup/internal/book/delivery/http"
+	userHTTP "reup/internal/user/delivery/http"
 
-	bookRepo "book-store/internal/book/repository/mongo"
-	userRepo "book-store/internal/user/repository/mongo"
+	bookRepo "reup/internal/book/repository/mongo"
+	userRepo "reup/internal/user/repository/mongo"
 
-	bookUseCase "book-store/internal/book/usecase"
-	userUseCase "book-store/internal/user/usecase"
+	bookUseCase "reup/internal/book/usecase"
+	userUseCase "reup/internal/user/usecase"
 
-	"book-store/internal/middleware"
+	"reup/internal/middleware"
 
-	bookProd "book-store/internal/book/delivery/rabbitmq/producer"
+	bookProd "reup/internal/book/delivery/rabbitmq/producer"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	// _ "book-store/docs"
+	// _ "reup/docs"
 )
 
 func (srv HTTPServer) mapHandlers() {
@@ -53,6 +54,13 @@ func (srv HTTPServer) mapHandlers() {
 	if userRepository == nil {
 		srv.l.Fatal(context.Background(), "Failed to initialize user repository")
 	}
+	chatIDs := telegram.ChatIDs{
+		ReportBug:     srv.telegram.ChatIDs.ReportBug,
+		ReportPayment: srv.telegram.ChatIDs.ReportPayment,
+	}
+	telegram := telegram.New(srv.telegram.BotKey, chatIDs)
+	srv.gin.Use(middleware.Recovery(telegram, srv.telegram.ChatIDs.ReportBug))
+	// srv.l.Fatal(context.Background(), telegram)
 
 	// Producer
 	if srv.amqpConn == nil {

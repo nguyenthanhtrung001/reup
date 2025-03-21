@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	"book-store/config"
-	"book-store/pkg/redis"
+	"reup/config"
+	"reup/pkg/redis"
 )
 
 func Connect(redisConfig config.RedisConfig) (redis.Client, error) {

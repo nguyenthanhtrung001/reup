@@ -1,9 +1,9 @@
 package job
 
 import (
-	"book-store/internal/book/usecase"
-	"book-store/pkg/cron"
-	pkgLog "book-store/pkg/log"
+	"reup/internal/book/usecase"
+	"reup/pkg/cron"
+	pkgLog "reup/pkg/log"
 )
 
 type Handler struct {
