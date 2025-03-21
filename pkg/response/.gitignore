@@ -1,0 +1,25 @@
+# Bỏ qua các file nhị phân Go (binary)
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Bỏ qua các thư mục Go
+/vendor/
+
+# Bỏ qua các file tạm thời của hệ thống
+.DS_Store          # macOS
+Thumbs.db          # Windows
+
+# Các file log
+*.log
+
+# Các file cấu hình của VS Code
+.vscode/
+
+# Bỏ qua các file môi trường
+.env
+
+# Bỏ qua các thư mục tạm thời khác
+.idea/

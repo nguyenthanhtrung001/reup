@@ -1,0 +1,84 @@
+services:
+
+  api:
+    # Thuộc tính bắt buộc: `build` hoặc `image` phải có để tạo container
+    # Xây dựng container từ Dockerfile
+    build:
+      context: .  # Chỉ định thư mục hiện tại (.) làm ngữ cảnh để xây dựng image
+      dockerfile: cmd/api/Dockerfile  # Đường dẫn tới Dockerfile để xây dựng image
+
+    # Thuộc tính bắt buộc: `image` phải có để chỉ định tên image Docker
+    # Tên của image được tạo ra khi xây dựng
+    image: ${REPO}/api:${TAG}  # Sử dụng biến môi trường REPO và TAG để chỉ định tên image
+
+    # Thuộc tính bắt buộc: `ports` phải có để ánh xạ cổng giữa container và máy chủ
+    # Chính sách khởi động lại container khi bị dừng
+    restart: unless-stopped  # Container sẽ tự động khởi động lại trừ khi bạn dừng thủ công
+
+    # Thuộc tính bắt buộc: `tty` không bắt buộc nhưng cần nếu bạn muốn cấp terminal cho container
+    # Cung cấp terminal cho container
+    tty: true  # Cung cấp terminal để container có thể giao tiếp với người dùng
+
+    # Thuộc tính bắt buộc: `ports` phải có để ánh xạ cổng giữa container và máy chủ
+    ports:
+      - ${API_PORT}:${API_PORT}  # Ánh xạ cổng API_PORT trong container sang cổng API_PORT trên máy chủ
+
+    # Thuộc tính bắt buộc: `env_file` không bắt buộc nhưng thường dùng để tải các biến môi trường
+    # Sử dụng file .env để lấy các biến môi trường
+    env_file:
+      - .env  # Tải các biến môi trường từ file .env
+
+    # Thuộc tính bắt buộc: `dns` không phải là bắt buộc nhưng có thể cần để chỉ định DNS server cụ thể
+    # Cấu hình DNS cho container
+    dns:
+      - 8.8.8.8  # Sử dụng DNS Google
+      - 8.8.4.4  # DNS phụ của Google
+
+    # Thuộc tính bắt buộc: `volumes` không bắt buộc nhưng có thể rất hữu ích để chia sẻ dữ liệu giữa container và máy chủ
+    # Ánh xạ thư mục từ máy chủ vào container
+    volumes:
+      - ./files:/app/files  # Ánh xạ thư mục ./files từ máy chủ vào thư mục /app/files trong container
+
+    # Thuộc tính bắt buộc: `networks` phải có để xác định mạng mà container sẽ kết nối
+    # Xác định mạng mà container sẽ kết nối
+    networks:
+      - book-network  # Container này sẽ sử dụng mạng ytbdash-network
+  scheduler:
+    build:
+      context: .
+      dockerfile: cmd/scheduler/Dockerfile
+    image: ${REPO}/scheduler:${TAG}
+    restart: unless-stopped
+    tty: true
+    env_file:
+      - .env
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # Set docker time
+    networks:
+      - book-network
+
+  consumer:
+    build:
+      context: .
+      dockerfile: cmd/consumer/Dockerfile
+    image: ${REPO}/consumer:${TAG}
+    restart: unless-stopped
+    tty: true
+    env_file:
+      - .env
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # Set docker time
+    networks:
+      - book-network
+
+# Docker Network
+# Thuộc tính bắt buộc: `networks` phải có để xác định mạng Docker mà các container sử dụng
+networks:
+  book-network:
+    driver: bridge  # Sử dụng mạng bridge mặc định trong Docker để kết nối các container
