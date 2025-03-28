@@ -1,0 +1,47 @@
+package repository
+
+import (
+	"context"
+	"reup/internal/models"
+)
+
+type Repository interface {
+	BiliSpaceRepo
+	PriorityScanComputerRepo
+	ChannelRepo
+	BiliVideoRepo
+	AppSettingRepo
+	ScanChannelRepo
+}
+
+type BiliSpaceRepo interface {
+	FindDouyinOldSpaces(ctx context.Context, opts *FindDouyinOldSpacesOptions) ([]models.BiliSpace, error)
+	CreateBiliSpace(ctx context.Context, input CreateBiliSpaceInput) (*models.BiliSpace, error)
+	UpdateBiliSpaceF(ctx context.Context, mid int64, updatedFields map[string]interface{}) error
+	UpdateBiliSpace(ctx context.Context, mid int64, douyinWaitScan int, scanError int) error
+}
+
+type PriorityScanComputerRepo interface {
+	FindAllPriorityScanComputers(ctx context.Context) ([]models.PriorityScanComputer, error)
+}
+
+type ChannelRepo interface {
+	FindChannelsGroupedByComputer(ctx context.Context) ([]ChannelGroup, error)
+	CheckChannelExists(ctx context.Context, channelID int64) (bool, error)
+	FindUsernamesByComputer(ctx context.Context, computerName string) ([]string, error)
+}
+
+type BiliVideoRepo interface {
+	CheckDouyinVideoExists(ctx context.Context, videoID string) bool
+	CreateDouyinVideo(ctx context.Context, input CreateBiliVideoInput) (*models.BiliVideo, error)
+	InsertBiliVideos(ctx context.Context, videos []models.BiliVideo) error
+}
+
+type AppSettingRepo interface {
+	GetFirstRecord(ctx context.Context) (*models.AppSetting, error)
+}
+
+type ScanChannelRepo interface {
+	FindDouyinScanChannelBySecUID(ctx context.Context, secUID string) (*models.DouyinScanChannel, error)
+	InsertDouyinScanChannels(ctx context.Context, channels []models.DouyinScanChannel) error
+}

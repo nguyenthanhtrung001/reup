@@ -4,12 +4,14 @@ import (
 	"context"
 	"os"
 	"os/signal"
-	bookJob "reup/internal/book/delivery/job"
-	bookProd "reup/internal/book/delivery/rabbitmq/producer"
-	bookMongo "reup/internal/book/repository/mongo"
-	bookUsecase "reup/internal/book/usecase"
+
+	scanVideoJob "reup/internal/scan_video/delivery/job"
+	scanVideoProd "reup/internal/scan_video/delivery/rabbitmq/producer"
+	scanVideoMongo "reup/internal/scan_video/repository/mongo"
+	scanVideoUsecase "reup/internal/scan_video/usecase"
 	"reup/pkg/cron"
 	"reup/pkg/jwt"
+	"reup/pkg/telegram"
 	"syscall"
 )
 
@@ -37,23 +39,29 @@ func (s Scheduler) registerJobs() error {
 	// tạo wrapper cho các job
 	s.cron.SetFuncWrapper(s.jobWrapper)
 
+	chatIDs := telegram.ChatIDs{
+		ReportBug:     s.telegram.ChatIDs.ReportBug,
+		ReportPayment: s.telegram.ChatIDs.ReportPayment,
+	}
+	telegram := telegram.New(s.telegram.BotKey, chatIDs)
+
 	// Producers
-	bookProd := bookProd.New(s.l, s.conn)
-	if err := bookProd.Run(); err != nil {
+	scanVideoProd := scanVideoProd.New(s.l, s.conn)
+	if err := scanVideoProd.Run(); err != nil {
 		return err
 	}
 
 	// khai báo usecase sử dụng trong job
-	bookMongo := bookMongo.New(s.l, s.db, jwt.JWTMaker{})
-	bookUsecase := bookUsecase.New(s.l, bookMongo, s.encrypter, bookProd)
-
-	s.l.Info(context.Background(), bookUsecase)
+	scanVideoMongo := scanVideoMongo.New(s.l, s.db, jwt.JWTMaker{})
+	scanVideoUsecase := scanVideoUsecase.New(s.l, scanVideoMongo, s.encrypter, scanVideoProd, telegram, scanVideoUsecase.TeleChat{
+		NotifiChatID: s.telegram.ReportPayment,
+	})
 
 	jobHandler := []interface {
 		Register() []cron.JobInfo
 	}{
 		// đăng ký job tại đây
-		bookJob.New(s.l, bookUsecase, s.cron),
+		scanVideoJob.New(s.l, scanVideoUsecase, s.cron),
 	}
 	for _, job := range jobHandler {
 		infos := job.Register()

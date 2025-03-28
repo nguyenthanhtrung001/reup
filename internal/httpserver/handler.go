@@ -6,18 +6,18 @@ import (
 	"reup/pkg/jwt"
 	"reup/pkg/telegram"
 
-	bookHTTP "reup/internal/book/delivery/http"
+	scanVideoHTTP "reup/internal/scan_video/delivery/http"
 	userHTTP "reup/internal/user/delivery/http"
 
-	bookRepo "reup/internal/book/repository/mongo"
+	scanVideoRepo "reup/internal/scan_video/repository/mongo"
 	userRepo "reup/internal/user/repository/mongo"
 
-	bookUseCase "reup/internal/book/usecase"
+	scanVideoUseCase "reup/internal/scan_video/usecase"
 	userUseCase "reup/internal/user/usecase"
 
 	"reup/internal/middleware"
 
-	bookProd "reup/internal/book/delivery/rabbitmq/producer"
+	scanVideoProd "reup/internal/scan_video/delivery/rabbitmq/producer"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -45,15 +45,16 @@ func (srv HTTPServer) mapHandlers() {
 	}
 
 	// Repositories
-	bookRepository := bookRepo.New(srv.l, srv.database, jwtManager)
-	if bookRepository == nil {
-		srv.l.Fatal(context.Background(), "Failed to initialize book repository")
-	}
 
 	userRepository := userRepo.New(srv.l, srv.database, jwtManager)
 	if userRepository == nil {
 		srv.l.Fatal(context.Background(), "Failed to initialize user repository")
 	}
+	scanVideoRepository := scanVideoRepo.New(srv.l, srv.database, jwtManager)
+	if scanVideoRepository == nil {
+		srv.l.Fatal(context.Background(), "Failed to initialize scanVideoRepository repository")
+	}
+
 	chatIDs := telegram.ChatIDs{
 		ReportBug:     srv.telegram.ChatIDs.ReportBug,
 		ReportPayment: srv.telegram.ChatIDs.ReportPayment,
@@ -66,31 +67,37 @@ func (srv HTTPServer) mapHandlers() {
 	if srv.amqpConn == nil {
 		srv.l.Fatal(context.Background(), "AMQP connection is nil")
 	}
-	bookProd := bookProd.New(srv.l, srv.amqpConn)
-	if err := bookProd.Run(); err != nil {
-		srv.l.Fatal(context.Background(), "Failed to run book producer: %v", err)
+
+	scanVideoProd := scanVideoProd.New(srv.l, srv.amqpConn)
+	if err := scanVideoProd.Run(); err != nil {
+		srv.l.Fatal(context.Background(), "Failed to run sacnVideoProd producer: %v", err)
 	}
 
 	// UseCases
-	bookUC := bookUseCase.New(srv.l, bookRepository, encrypter, bookProd)
-	if bookUC == nil {
-		srv.l.Fatal(context.Background(), "Failed to initialize book use case")
-	}
-
 	userUC := userUseCase.New(srv.l, userRepository, encrypter)
 	if userUC == nil {
 		srv.l.Fatal(context.Background(), "Failed to initialize user use case")
 	}
+	scanVideoUC := scanVideoUseCase.New(srv.l, scanVideoRepository, encrypter, scanVideoProd, telegram, scanVideoUseCase.TeleChat{
+		NotifiChatID: srv.telegram.ReportPayment,
+		GroupChat1:   srv.telegram.GroupChat1,
+		GroupChat2:   srv.telegram.GroupChat2,
+		GroupChat3:   srv.telegram.GroupChat3,
+	})
+	if scanVideoUC == nil {
+		srv.l.Fatal(context.Background(), "Failed to initialize scanVideoUC use case")
+	}
 
 	// Handlers
-	bookH := bookHTTP.New(srv.l, bookUC)
-	if bookH == nil {
-		srv.l.Fatal(context.Background(), "Failed to initialize book handler")
-	}
 
 	userH := userHTTP.New(srv.l, userUC)
 	if userH == nil {
 		srv.l.Fatal(context.Background(), "Failed to initialize user handler")
+	}
+
+	scanVideoH := scanVideoHTTP.New(srv.l, scanVideoUC)
+	if scanVideoH == nil {
+		srv.l.Fatal(context.Background(), "Failed to initialize scanVideoH handler")
 	}
 
 	// API group
@@ -114,7 +121,7 @@ func (srv HTTPServer) mapHandlers() {
 	// System maintenance
 	api.Use(mw.SystemMaintenance())
 
-	// Map book routes
-	bookHTTP.MapbookRoutes(api.Group("/book"), bookH, mw)
+	// Map  routes
 	userHTTP.MapUserRoutes(api.Group("/user"), userH, mw)
+	scanVideoHTTP.MapScanVideoRoutes(api.Group("/scan"), scanVideoH, mw)
 }

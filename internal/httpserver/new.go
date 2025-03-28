@@ -50,6 +50,9 @@ type TeleCredentials struct {
 type ChatIDs struct {
 	ReportBug     int64
 	ReportPayment int64
+	GroupChat1    int64
+	GroupChat2    int64
+	GroupChat3    int64
 }
 
 func New(l pkgLog.Logger, cfg Config) *HTTPServer {

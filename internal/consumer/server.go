@@ -10,10 +10,10 @@ import (
 	"reup/pkg/redis"
 	"reup/pkg/telegram"
 
-	bookConsumer "reup/internal/book/delivery/rabbitmq/consumer"
-	bookProd "reup/internal/book/delivery/rabbitmq/producer"
-	bookMongo "reup/internal/book/repository/mongo"
-	bookUseCase "reup/internal/book/usecase"
+	scanVideoConsumer "reup/internal/scan_video/delivery/rabbitmq/consumer"
+	scanVideoProd "reup/internal/scan_video/delivery/rabbitmq/producer"
+	scanVideoMongo "reup/internal/scan_video/repository/mongo"
+	scanVideoUseCase "reup/internal/scan_video/usecase"
 
 	pkgCrt "reup/pkg/encrypter"
 )
@@ -35,6 +35,9 @@ type TeleCredentials struct {
 type ChatIDs struct {
 	ReportBug     int64
 	ReportPayment int64
+	GroupChat1    int64
+	GroupChat2    int64
+	GroupChat3    int64
 }
 
 // NewServer creates a new consumer server
@@ -64,24 +67,30 @@ func (s Server) Run() error {
 	}
 	telegram := telegram.New(s.telegram.BotKey, chatIDs)
 	// Producer
-	bookProd := bookProd.New(s.l, s.conn)
-	if err := bookProd.Run(); err != nil {
+	scanVideoProd := scanVideoProd.New(s.l, s.conn)
+	if err := scanVideoProd.Run(); err != nil {
 		s.l.Fatal(context.Background(), err)
 		return err
 	}
 	// Cac usecase su dung tele them o day
-	s.l.Fatal(context.Background(), telegram)
+	//s.l.Fatal(context.Background(), telegram)
+	s.l.Info(context.Background(), telegram)
 	// Repositories
 
-	bookMongo := bookMongo.New(s.l, s.db, jwt.JWTMaker{})
+	scanVideoMongo := scanVideoMongo.New(s.l, s.db, jwt.JWTMaker{})
 
 	// UseCases
 
-	bookUseCase := bookUseCase.New(s.l, bookMongo, pkgCrt.NewEncrypter(""), bookProd)
+	scanVideoUseCase := scanVideoUseCase.New(s.l, scanVideoMongo, pkgCrt.NewEncrypter(""), scanVideoProd, telegram, scanVideoUseCase.TeleChat{
+		NotifiChatID: s.telegram.ReportPayment,
+		GroupChat1:   s.telegram.GroupChat1,
+		GroupChat2:   s.telegram.GroupChat2,
+		GroupChat3:   s.telegram.GroupChat3,
+	})
 
 	// Consumer
-	var forever chan bool
-	bookConsumer.NewConsumer(s.l, s.conn, bookUseCase).Consume()
+	var forever = make(chan bool)
+	scanVideoConsumer.NewConsumer(s.l, s.conn, scanVideoUseCase).Consume()
 
 	<-forever
 

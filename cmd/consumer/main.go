@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 
 	"reup/config"
 	"reup/internal/appconfig/mongo"
@@ -10,12 +11,17 @@ import (
 	pkgCrt "reup/pkg/encrypter"
 	pkgLog "reup/pkg/log"
 	"reup/pkg/rabbitmq"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
 
 	ctx := context.Background()
-
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
 	// Load config
 	cfg, err := config.Load()
 	if err != nil {
@@ -55,6 +61,9 @@ func main() {
 			ChatIDs: consumer.ChatIDs{
 				ReportBug:     cfg.Telegram.ChatIDs.ReportBug,
 				ReportPayment: cfg.Telegram.ChatIDs.ReportPayment,
+				GroupChat1:    cfg.Telegram.ChatIDs.GroupChat1,
+				GroupChat2:    cfg.Telegram.ChatIDs.GroupChat2,
+				GroupChat3:    cfg.Telegram.ChatIDs.GroupChat3,
 			}}).Run(); err != nil {
 		l.Fatalf(ctx, "Failed to run consumer server: %v", err)
 	}

@@ -60,6 +60,9 @@ type TelegramConfig struct {
 type TeleChatIDs struct {
 	ReportBug     int64 `env:"TELEGRAM_REPORT_BUG"`
 	ReportPayment int64 `env:"TELEGRAM_REPORT_PAYMENT"`
+	GroupChat1    int64 `env:"TELEGRAM_GROUP_1"`
+	GroupChat2    int64 `env:"TELEGRAM_GROUP_2"`
+	GroupChat3    int64 `env:"TELEGRAM_GROUP_3"`
 }
 
 func Load() (*Config, error) {
