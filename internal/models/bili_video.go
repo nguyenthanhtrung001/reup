@@ -17,4 +17,6 @@ type BiliVideo struct {
 	Type              string    `bson:"type"`
 	UpdatedAt         time.Time `bson:"updated_at"`
 	CreatedAt         time.Time `bson:"created_at"`
+	DownloadURL       string    `bson:"download_url"`
+	Tags              string    `bson:"tags"`
 }

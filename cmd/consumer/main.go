@@ -20,7 +20,7 @@ func main() {
 	ctx := context.Background()
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalf("Error loading .env file: %v", err)
+		log.Fatalf("Error loading .env file con: %v", err)
 	}
 	// Load config
 	cfg, err := config.Load()

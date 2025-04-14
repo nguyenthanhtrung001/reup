@@ -12,6 +12,7 @@ type Repository interface {
 	BiliVideoRepo
 	AppSettingRepo
 	ScanChannelRepo
+	VideoWebHookRepo
 }
 
 type BiliSpaceRepo interface {
@@ -44,4 +45,9 @@ type AppSettingRepo interface {
 type ScanChannelRepo interface {
 	FindDouyinScanChannelBySecUID(ctx context.Context, secUID string) (*models.DouyinScanChannel, error)
 	InsertDouyinScanChannels(ctx context.Context, channels []models.DouyinScanChannel) error
+}
+
+type VideoWebHookRepo interface {
+	GetExistingVideoIds(ctx context.Context, videoIds []string) (map[string]struct{}, error)
+	GetBiliSpaceByDouyinLink(ctx context.Context, douyinLink string) (*models.BiliSpace, error)
 }

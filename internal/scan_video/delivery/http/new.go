@@ -13,6 +13,7 @@ type Handler interface {
 
 type ScanVideoHandler interface {
 	scanDouyinVideosHandler(c *gin.Context)
+	HandleDouyinWebhook(c *gin.Context)
 }
 
 type handler struct {

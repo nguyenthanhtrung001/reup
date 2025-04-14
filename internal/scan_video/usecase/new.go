@@ -43,6 +43,7 @@ type ScanVideo interface {
 	ScanDouyinVideoSheduler()
 	ScanDouyinVideoFullPageSheduler()
 	ScanDouyinVideoManualSheduler()
+	HandleDouyinWebhook(c interface{}, data HandleDouyinWebhookInput) (int, error)
 }
 
 type ScanChannel interface {

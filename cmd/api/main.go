@@ -30,6 +30,10 @@ import (
 // @schemes http
 func main() {
 
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file main: %v", err)
+	// }
 	// Load config
 	cfg, err := config.Load()
 	if err != nil {

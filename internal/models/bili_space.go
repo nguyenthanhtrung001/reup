@@ -24,4 +24,5 @@ type BiliSpace struct {
 	FirstJoinScanCount *int64    `bson:"first_join_scan_count,omitempty"`
 	DouyinLastScan     *int64    `bson:"douyin_last_scan,omitempty"`
 	DouyinWaitScan     *int      `bson:"douyin_wait_scan,omitempty"`
+	IsScanFull         bool      `bson:"is_scan_full"`
 }
