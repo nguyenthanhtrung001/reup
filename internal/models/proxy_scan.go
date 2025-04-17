@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-type Proxy struct {
+type ProxyScan struct {
 	ID        string    `bson:"_id"`
 	ProxyIP   string    `bson:"proxy_ip"`
 	Live      int       `bson:"live"`

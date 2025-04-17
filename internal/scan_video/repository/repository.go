@@ -13,6 +13,7 @@ type Repository interface {
 	AppSettingRepo
 	ScanChannelRepo
 	VideoWebHookRepo
+	ProxyScanRepo
 }
 
 type BiliSpaceRepo interface {
@@ -50,4 +51,11 @@ type ScanChannelRepo interface {
 type VideoWebHookRepo interface {
 	GetExistingVideoIds(ctx context.Context, videoIds []string) (map[string]struct{}, error)
 	GetBiliSpaceByDouyinLink(ctx context.Context, douyinLink string) (*models.BiliSpace, error)
+}
+type ProxyScanRepo interface {
+	GetProxyScanRandom(ctx context.Context) (*models.ProxyScan, error)
+	GetAllProxyScan(ctx context.Context) ([]models.ProxyScan, error)
+	DoneProxyScan(ctx context.Context, proxyIP string) error
+	DoneAllProxyScan(ctx context.Context) error
+	InsertProxyScan(ctx context.Context, proxyIP string) error
 }

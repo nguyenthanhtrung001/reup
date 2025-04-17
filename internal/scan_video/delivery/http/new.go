@@ -9,10 +9,18 @@ import (
 
 type Handler interface {
 	ScanVideoHandler
+	ProxySxanHandler
 }
 
 type ScanVideoHandler interface {
 	HandleDouyinWebhook(c *gin.Context)
+}
+type ProxySxanHandler interface {
+	DoneAllProxyScan(c *gin.Context)
+	DoneProxyScan(c *gin.Context)
+	GetAllProxyScan(c *gin.Context)
+	GetProxyScanRandom(c *gin.Context)
+	InsertProxyScan(c *gin.Context)
 }
 
 type handler struct {

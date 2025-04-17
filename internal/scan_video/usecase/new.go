@@ -18,6 +18,7 @@ type UseCase interface {
 	DouyinVideoUC
 	ScanVideo
 	Telegram
+	ProxyScan
 }
 
 type DouyinSpaceUC interface {
@@ -52,6 +53,14 @@ type ScanChannel interface {
 
 type Telegram interface {
 	filterAndSendTelegram(ctx context.Context, videos []models.BiliVideo, froup int) error
+}
+
+type ProxyScan interface {
+	DoneAllProxyScan(ctx context.Context) error
+	DoneProxyScan(ctx context.Context, proxyIP string) error
+	GetAllProxyScan(ctx context.Context) ([]models.ProxyScan, error)
+	GetProxyScanRandom(ctx context.Context) (*models.ProxyScan, error)
+	InsertProxyScan(ctx context.Context, ProxyIP string) error
 }
 type implUseCase struct {
 	l         log.Logger

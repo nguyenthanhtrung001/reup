@@ -124,4 +124,5 @@ func (srv HTTPServer) mapHandlers() {
 	// Map  routes
 	userHTTP.MapUserRoutes(api.Group("/user"), userH, mw)
 	scanVideoHTTP.MapScanVideoRoutes(api.Group("/scan"), scanVideoH, mw)
+	scanVideoHTTP.MapProxyRoutes(api.Group("/"), scanVideoH, mw)
 }

@@ -108,16 +108,3 @@ func (uc implUseCase) ScanDouyinVideoSheduler() {
 
 	uc.l.Infof(ctx, "========= SCAN DOUYIN VIDEOS COMPLETED =========")
 }
-
-// convertToRabbitMQArrChannel converts a slice of map[string]interface{} to a slice of rabbitmq.ArrChannel
-func convertToRabbitMQArrChannel2(channels []map[string]interface{}) []ArrChannel {
-	result := make([]ArrChannel, len(channels))
-	for i, ch := range channels {
-
-		result[i] = ArrChannel{
-			SpaceId:   ch["space_id"].(int64),
-			ChannelId: []string{ch["channel_id"].(string)},
-		}
-	}
-	return result
-}
