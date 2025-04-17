@@ -39,11 +39,11 @@ type DouyinVideoUC interface {
 	CreateDouyinVideo(ctx context.Context, input CreateBiliVideoInput) (*models.BiliVideo, error)
 }
 type ScanVideo interface {
-	ScanDouyinVideos(ctx context.Context, input ScanDouyinVideosInput) ([]models.BiliVideo, error)
 	ScanDouyinVideoSheduler()
 	ScanDouyinVideoFullPageSheduler()
 	ScanDouyinVideoManualSheduler()
 	HandleDouyinWebhook(c interface{}, data HandleDouyinWebhookInput) (int, error)
+	SentScanDouyinVideos(spaceArr []ArrChannel, isFull bool) error
 }
 
 type ScanChannel interface {
@@ -61,6 +61,7 @@ type implUseCase struct {
 	tele      telegram.Telegram
 	teleChat  TeleChat
 }
+
 type TeleChat struct {
 	NotifiChatID int64
 	GroupChat1   int64

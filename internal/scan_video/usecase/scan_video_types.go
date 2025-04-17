@@ -2,13 +2,7 @@ package usecase
 
 import (
 	"reup/internal/models"
-	"time"
 )
-
-type DouyinResponse struct {
-	AwemeList []VideoInfo `json:"aweme_list"`
-	MaxCursor int         `json:"max_cursor"`
-}
 
 type DouyinVideo struct {
 	VideoID       string `json:"video_id"`
@@ -26,33 +20,14 @@ type DouyinVideo struct {
 	CreatedAt     string `json:"created_at"`
 }
 
-type VideoInfo struct {
-	AwemeID    string `json:"aweme_id"`
-	Desc       string `json:"desc"`
-	CreateTime int    `json:"create_time"`
-	Duration   int    `binding:"duration"`
-	Video      Video  `json:"video"`
-}
-
-type Video struct {
-	Cover Cover `json:"cover"`
-}
-type Cover struct {
-	URLList []string `json:"url_list"`
-}
-
 type ScanDouyinVideosInput struct {
-	Mid        int64
-	SecUserID  string
-	VideoCount int
-	NewFlag    bool
+	ArrChannel []ArrChannel
+	IsScanFull bool
 	Group      int
-	DomainAPI  string
 }
-
-func intToTime(timestamp int64) time.Time {
-	// Chuyển timestamp sang time.Time
-	return time.Unix(timestamp, 0)
+type ArrChannel struct {
+	SpaceId   int64
+	ChannelId []string
 }
 
 type ComputerSetting struct {
@@ -61,10 +36,15 @@ type ComputerSetting struct {
 	DomainAPI   string
 }
 
-type InputProducer struct {
-	Mid       string
-	SecUserId string
-	Count     int
+type ScanResponse struct {
+	Message     string `json:"message"`
+	QueuedCount int    `json:"queued_count"`
+}
+
+// Struct để gửi request đến API
+type ScanRequest struct {
+	Spaces []ArrChannel `json:"channels"`
+	IsFull bool         `json:"is_full"`
 }
 
 // Hàm tìm cấu hình mặc định
@@ -97,4 +77,17 @@ func (uc implUseCase) createDomainMap(settings []models.PriorityScanComputer) ma
 		}
 	}
 	return domainMap
+}
+
+// convertToRabbitMQArrChannel converts a slice of map[string]interface{} to a slice of rabbitmq.ArrChannel
+func convertToRabbitMQArrChannel2(channels []map[string]interface{}) []ArrChannel {
+	result := make([]ArrChannel, len(channels))
+	for i, ch := range channels {
+
+		result[i] = ArrChannel{
+			SpaceId:   ch["space_id"].(int64),
+			ChannelId: []string{ch["channel_id"].(string)},
+		}
+	}
+	return result
 }

@@ -75,7 +75,7 @@ func (uc implUseCase) ScanDouyinVideoSheduler() {
 			continue
 		}
 
-		// Cập nhật trạng thái cho từng BiliSpace
+		// Cập nhật trạng thái cho từng BiliSpace gồm :douyin_last_scan, last_scan
 		for _, space := range douyinSpaces {
 			err := uc.repo.UpdateBiliSpace(ctx, space.Mid, 0, 0)
 			if err != nil {
@@ -84,24 +84,40 @@ func (uc implUseCase) ScanDouyinVideoSheduler() {
 		}
 
 		// Xử lý từng video Douyin
-		for _, space := range douyinSpaces {
-			secUserID := strings.Replace(space.DouyinLink, "https://www.douyin.com/user/", "", -1)
-
-			// Thực hiện quét video Douyin
-			data := ScanDouyinVideosInput{
-				Mid:        space.Mid,
-				SecUserID:  secUserID,
-				VideoCount: 10,
-				NewFlag:    false,
-				Group:      1,
-				DomainAPI:  cs.DomainAPI,
+		spaceArr := make([]map[string]interface{}, len(douyinSpaces))
+		for i, space := range douyinSpaces {
+			// Trích xuất channel_id từ DouyinLink
+			channelID := strings.Replace(space.DouyinLink, "https://www.douyin.com/user/", "", -1)
+			spaceArr[i] = map[string]interface{}{
+				"space_id":   space.Mid,
+				"channel_id": channelID,
 			}
-			uc.pubScanVideoOldTask(ctx, data)
-
+		}
+		err = uc.pubScanVideoOldTask(ctx, ScanDouyinVideosInput{
+			ArrChannel: convertToRabbitMQArrChannel2(spaceArr),
+			IsScanFull: false, // Cập nhật flag quét đầy đủ tùy theo yêu cầu
+			Group:      1,     // Có thể thay đổi nhóm nếu cần
+		})
+		if err != nil {
+			uc.l.Errorf(ctx, "Error publishing to RabbitMQ for computer %s: %v", err)
+			continue
 		}
 
 		uc.l.Infof(ctx, "Finished processing computer: %s", cs.Computer)
 	}
 
 	uc.l.Infof(ctx, "========= SCAN DOUYIN VIDEOS COMPLETED =========")
+}
+
+// convertToRabbitMQArrChannel converts a slice of map[string]interface{} to a slice of rabbitmq.ArrChannel
+func convertToRabbitMQArrChannel2(channels []map[string]interface{}) []ArrChannel {
+	result := make([]ArrChannel, len(channels))
+	for i, ch := range channels {
+
+		result[i] = ArrChannel{
+			SpaceId:   ch["space_id"].(int64),
+			ChannelId: []string{ch["channel_id"].(string)},
+		}
+	}
+	return result
 }

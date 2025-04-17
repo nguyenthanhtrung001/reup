@@ -8,10 +8,10 @@ import (
 )
 
 func (uc implUseCase) ScanDouyinVideoManualSheduler() {
-
 	ctx := context.Background()
 	uc.l.Info(ctx, "======================== Start manual scan ===========================")
 
+	// Lấy cấu hình từ DB
 	setting, err := uc.repo.GetFirstRecord(ctx)
 	if err != nil {
 		uc.l.Errorf(ctx, "Error getting settings from DB: %v", err)
@@ -23,13 +23,15 @@ func (uc implUseCase) ScanDouyinVideoManualSheduler() {
 	// Nếu trạng thái quét video thủ công là 1 (bật)
 	if setting.DouyinManualScanStatus == 1 {
 		uc.l.Info(ctx, "Manual scan is enabled, fetching Douyin spaces...")
+
+		// Lấy danh sách Douyin spaces từ repository
 		users := []string{"manual_group2@gmail.com"}
 		userScan := repository.FindDouyinOldSpacesOptions{
 			ChannelUsernames: users,
-			ScanNumbers:      15,
+			ScanNumbers:      200, // Giới hạn số lượng quét
 		}
 
-		// Lấy danh sách các Douyin spaces
+		// Lấy các Douyin spaces từ repository
 		douyinSpaces, err = uc.repo.FindDouyinOldSpaces(ctx, &userScan)
 		if err != nil {
 			uc.l.Errorf(ctx, "Error getting Douyin spaces: %v", err)
@@ -43,49 +45,52 @@ func (uc implUseCase) ScanDouyinVideoManualSheduler() {
 		douyinSpaces = []models.BiliSpace{} // Nếu không quét, gán slice rỗng
 	}
 
-	// Cập nhật trạng thái cho từng BiliSpace
+	// Tạo các mảng để phân loại quét tất cả video và video mới
+	var scanAllVideosArr []map[string]interface{}
+	var scanNewVideosArr []map[string]interface{}
+
+	// Xử lý từng Douyin space và phân loại
 	for _, space := range douyinSpaces {
-		uc.l.Infof(ctx, "Updating Douyin space for MID: %s", space.Mid)
-		err := uc.repo.UpdateBiliSpace(ctx, space.Mid, 0, 0)
-		if err != nil {
-			uc.l.Errorf(ctx, "Error updating Douyin space for MID %s: %v", space.Mid, err)
+		// Trích xuất channel_id từ DouyinLink
+		channelID := strings.Replace(space.DouyinLink, "https://www.douyin.com/user/", "", -1)
+		spaceArr := map[string]interface{}{
+			"space_id":   space.Mid,
+			"channel_id": channelID,
+		}
+
+		// Lọc ra 2 nhóm: quét tất cả video và quét video mới
+		if space.DouyinLastScan == nil || *space.DouyinLastScan == 0 || space.CountVideo == 0 {
+			scanAllVideosArr = append(scanAllVideosArr, spaceArr)
 		} else {
-			uc.l.Infof(ctx, "Successfully updated Douyin space for MID %s.", space.Mid)
+			scanNewVideosArr = append(scanNewVideosArr, spaceArr)
 		}
 	}
 
-	// Xử lý quét video Douyin
-	for _, space := range douyinSpaces {
-		secUserID := strings.Replace(space.DouyinLink, "https://www.douyin.com/user/", "", -1)
-
-		uc.l.Infof(ctx, "Preparing scan for user: %s (SecUserID: %s)", space.DouyinLink, secUserID)
-
-		// Nếu DouyinLastScan là nil hoặc không có video
-		videoCount := 100
-		newFlag := true
-		if space.DouyinLastScan != nil && *space.DouyinLastScan != 0 && space.CountVideo > 0 {
-			videoCount = 10
-			newFlag = false
-			uc.l.Infof(ctx, "Douyin last scan found, changing video count to %d", videoCount)
+	// Log mảng gửi đi
+	if len(scanAllVideosArr) > 0 {
+		uc.l.Infof(ctx, "Dispatching job to scan all videos with %d entries.", len(scanAllVideosArr))
+		// Gửi tác vụ quét tất cả video
+		err = uc.pubScanVideoManualTask(ctx, ScanDouyinVideosInput{
+			ArrChannel: convertToRabbitMQArrChannel2(scanAllVideosArr),
+			IsScanFull: true, // Cập nhật flag quét đầy đủ tùy theo yêu cầu
+			Group:      1,    // Có thể thay đổi nhóm nếu cần
+		})
+		if err != nil {
+			uc.l.Errorf(ctx, "Error publishing to RabbitMQ for scan all videos: %v", err)
 		}
-		if newFlag == true {
-			uc.l.Infof(ctx, "Douyin last scan found.........scan new")
-		} else {
-			uc.l.Infof(ctx, "Douyin last scan found.........scan old")
-		}
-		// Tạo đầu vào và gửi tác vụ quét video
-		data := ScanDouyinVideosInput{
-			Mid:        space.Mid,
-			SecUserID:  secUserID,
-			VideoCount: videoCount,
-			NewFlag:    newFlag,
-			Group:      0,
-			DomainAPI:  "103.42.56.42:3000",
-		}
-		uc.l.Infof(ctx, "Sending video scan task for SecUserID: %s, VideoCount: %d", secUserID, videoCount)
-		uc.pubScanVideoManualTask(ctx, data)
+	}
 
-		uc.l.Info(ctx, "Job started for user:", secUserID)
+	if len(scanNewVideosArr) > 0 {
+		uc.l.Infof(ctx, "Dispatching job to scan new videos with %d entries.", len(scanNewVideosArr))
+		// Gửi tác vụ quét video mới
+		err = uc.pubScanVideoManualTask(ctx, ScanDouyinVideosInput{
+			ArrChannel: convertToRabbitMQArrChannel2(scanNewVideosArr),
+			IsScanFull: false, // Cập nhật flag quét đầy đủ tùy theo yêu cầu
+			Group:      1,     // Có thể thay đổi nhóm nếu cần
+		})
+		if err != nil {
+			uc.l.Errorf(ctx, "Error publishing to RabbitMQ for scan new videos: %v", err)
+		}
 	}
 
 	uc.l.Info(ctx, "======================== End of manual scan ===========================")

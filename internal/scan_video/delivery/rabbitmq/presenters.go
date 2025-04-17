@@ -3,11 +3,13 @@ package rabbitmq
 type BookMsg struct {
 	Msg string
 }
+
 type ScanDouyinVideosMsg struct {
-	Mid        int64
-	SecUserID  string
-	VideoCount int
-	NewFlag    bool
+	ArrChannel []ArrChannel
+	IsScanFull bool
 	Group      int
-	DomainAPI  string
+}
+type ArrChannel struct {
+	SpaceId   int64
+	ChannelId []string
 }

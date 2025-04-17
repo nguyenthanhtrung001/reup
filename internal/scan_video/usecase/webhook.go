@@ -10,27 +10,6 @@ import (
 	"reup/internal/models"
 )
 
-// Input data structure from the webhook
-type HandleDouyinWebhookInput struct {
-	ChannelID string      `json:"channel_id"`
-	Posts     []VideoData `json:"posts"`
-}
-
-type VideoData struct {
-	AwemeID     string    `json:"aweme_id"`
-	CoverURL    string    `json:"cover_url"`
-	Duration    int64     `json:"duration"`
-	Description string    `json:"description"`
-	CreateTime  int64     `json:"create_time"`
-	VideoURI    string    `json:"video_uri"`
-	VideoTag    []TagData `json:"video_tag"`
-}
-
-type TagData struct {
-	TagName string `json:"tag_name"`
-}
-
-// HandleDouyinWebhook processes the webhook and handles the business logic
 func (uc implUseCase) HandleDouyinWebhook(c interface{}, data HandleDouyinWebhookInput) (int, error) {
 	linkDouyin := "https://www.douyin.com/user/" + data.ChannelID
 	ctx := c.(context.Context)
@@ -40,7 +19,6 @@ func (uc implUseCase) HandleDouyinWebhook(c interface{}, data HandleDouyinWebhoo
 		return 0, errors.New("Error fetching BiliSpace")
 	}
 
-	// Extract existing video IDs and prepare new videos
 	videoIds := extractVideoIds(data.Posts)
 	existingVideos, err := uc.repo.GetExistingVideoIds(ctx, videoIds)
 	if err != nil {
@@ -48,7 +26,6 @@ func (uc implUseCase) HandleDouyinWebhook(c interface{}, data HandleDouyinWebhoo
 		return 0, errors.New("Error fetching existing video IDs")
 	}
 
-	// Process and insert new videos
 	var insertData []models.BiliVideo
 	for _, video := range data.Posts {
 		if !contains(existingVideos, video.AwemeID) {
@@ -71,7 +48,6 @@ func (uc implUseCase) HandleDouyinWebhook(c interface{}, data HandleDouyinWebhoo
 		}
 	}
 
-	// Insert the new videos into the database
 	if len(insertData) > 0 {
 		if err := uc.repo.InsertBiliVideos(ctx, insertData); err != nil {
 			log.Printf("Error inserting videos: %v", err)
@@ -79,7 +55,6 @@ func (uc implUseCase) HandleDouyinWebhook(c interface{}, data HandleDouyinWebhoo
 		}
 	}
 
-	// Update the BiliSpace with new scan times
 	now := time.Now().Unix()
 	billiSpace.DouyinLastScan = &now
 	billiSpace.LastScan = time.Now().Unix()
@@ -91,7 +66,6 @@ func (uc implUseCase) HandleDouyinWebhook(c interface{}, data HandleDouyinWebhoo
 	return len(insertData), nil
 }
 
-// Extract video IDs from posts
 func extractVideoIds(posts []VideoData) []string {
 	var videoIds []string
 	for _, post := range posts {
@@ -100,13 +74,11 @@ func extractVideoIds(posts []VideoData) []string {
 	return videoIds
 }
 
-// Check if a video ID exists in the map
 func contains(videoMap map[string]struct{}, item string) bool {
 	_, exists := videoMap[item]
 	return exists
 }
 
-// Extract tags for a video
 func extractTags(tags []TagData) string {
 	var tagNames []string
 	for _, tag := range tags {

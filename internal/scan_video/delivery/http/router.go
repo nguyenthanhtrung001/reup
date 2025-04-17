@@ -9,6 +9,5 @@ import (
 func MapScanVideoRoutes(r *gin.RouterGroup, h Handler, mw middleware.Middleware) {
 	// r.Use(mw.Auth()).Use(mw.AuthReseller(true))
 	r.POST("/test", h.HandleDouyinWebhook)
-	// r.Use(mw.Auth()).Use(mw.AuthUser())
 
 }

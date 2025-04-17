@@ -23,10 +23,9 @@ func (repo implRepository) getBiliSpaceCollection() mongo.Collection {
 }
 
 func (repo implRepository) FindDouyinOldSpaces(ctx context.Context, opts *repository.FindDouyinOldSpacesOptions) ([]models.BiliSpace, error) {
-	// Lấy collection bili_space
+
 	col := repo.getBiliSpaceCollection()
 
-	// Tạo filter cơ bản
 	filter := repo.buildFilter(opts)
 	// Tách việc tạo filter ra hàm riêng để tái sử dụng
 	if opts.DouyinLastScanIsZero != nil {

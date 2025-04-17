@@ -27,17 +27,13 @@ func (c Consumer) ScanVideoNew(d amqp.Delivery) {
 		d.Ack(false)
 		return
 	}
-	c.l.Info(ctx, "QUEUE NEW:", msg.SecUserID)
 
 	input := usecase.ScanDouyinVideosInput{
-		Mid:        msg.Mid,
-		SecUserID:  msg.SecUserID,
-		VideoCount: msg.VideoCount,
-		NewFlag:    msg.NewFlag,
+		ArrChannel: convertToUsecaseArrChannel(msg.ArrChannel),
+		IsScanFull: msg.IsScanFull,
 		Group:      msg.Group,
-		DomainAPI:  msg.DomainAPI,
 	}
-	c.uc.ScanDouyinVideos(ctx, input)
+	c.uc.SentScanDouyinVideos(input.ArrChannel, input.IsScanFull)
 
 	d.Ack(false)
 }
@@ -51,17 +47,12 @@ func (c Consumer) ScanVideoOld(d amqp.Delivery) {
 		d.Ack(false)
 		return
 	}
-	c.l.Info(ctx, "QUEUE OLD:", msg.SecUserID)
-
 	input := usecase.ScanDouyinVideosInput{
-		Mid:        msg.Mid,
-		SecUserID:  msg.SecUserID,
-		VideoCount: msg.VideoCount,
-		NewFlag:    msg.NewFlag,
+		ArrChannel: convertToUsecaseArrChannel(msg.ArrChannel),
+		IsScanFull: msg.IsScanFull,
 		Group:      msg.Group,
-		DomainAPI:  msg.DomainAPI,
 	}
-	c.uc.ScanDouyinVideos(ctx, input)
+	c.uc.SentScanDouyinVideos(input.ArrChannel, input.IsScanFull)
 
 	d.Ack(false)
 }
@@ -75,17 +66,25 @@ func (c Consumer) ScanVideoManual(d amqp.Delivery) {
 		d.Ack(false)
 		return
 	}
-	c.l.Info(ctx, "QUEUE MANUAL:", msg.SecUserID)
-
 	input := usecase.ScanDouyinVideosInput{
-		Mid:        msg.Mid,
-		SecUserID:  msg.SecUserID,
-		VideoCount: msg.VideoCount,
-		NewFlag:    msg.NewFlag,
+		ArrChannel: convertToUsecaseArrChannel(msg.ArrChannel),
+		IsScanFull: msg.IsScanFull,
 		Group:      msg.Group,
-		DomainAPI:  msg.DomainAPI,
 	}
-	c.uc.ScanDouyinVideos(ctx, input)
+
+	c.uc.SentScanDouyinVideos(input.ArrChannel, input.IsScanFull)
 
 	d.Ack(false)
+}
+
+// convertToUsecaseArrChannel converts a slice of rmqDelivery.ArrChannel to a slice of usecase.ArrChannel
+func convertToUsecaseArrChannel(channels []rmqDelivery.ArrChannel) []usecase.ArrChannel {
+	result := make([]usecase.ArrChannel, len(channels))
+	for i, ch := range channels {
+		result[i] = usecase.ArrChannel{
+			SpaceId:   ch.SpaceId,
+			ChannelId: ch.ChannelId,
+		}
+	}
+	return result
 }

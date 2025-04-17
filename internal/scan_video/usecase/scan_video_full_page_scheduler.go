@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-
 	"reup/internal/models"
 	"reup/internal/scan_video/repository"
 	"strings"
@@ -18,11 +17,14 @@ func (uc implUseCase) ScanDouyinVideoFullPageSheduler() {
 		uc.l.Errorf(ctx, "Error getting channels from DB: %v", err)
 		return
 	}
+
+	// Lấy tất cả các cấu hình từ PriorityScanComputers
 	settings, err := uc.repo.FindAllPriorityScanComputers(ctx)
 	if err != nil {
 		uc.l.Errorf(ctx, "Error getting settings from DB: %v", err)
 		return
 	}
+
 	// Tìm cấu hình mặc định
 	settingDefault := uc.findDefaultSetting(settings)
 	if (settingDefault == models.PriorityScanComputer{}) {
@@ -32,14 +34,13 @@ func (uc implUseCase) ScanDouyinVideoFullPageSheduler() {
 
 	// Tạo map lưu trữ số lượng scan cho mỗi computer
 	scanNumbersMap := uc.createScanNumbersMap(settings)
-	doaminMap := uc.createDomainMap(settings)
-	// uc.l.Infof(ctx, "Created scan numbers map from settings.")
+	domainMap := uc.createDomainMap(settings)
 
 	// Xử lý thông tin cấu hình của các computer
 	computerSettings := make(map[string]ComputerSetting)
 	for _, computer := range computers {
 		scanNumbers := scanNumbersMap[computer.Computer]
-		domain := doaminMap[computer.Computer]
+		domain := domainMap[computer.Computer]
 		computerSettings[computer.Computer] = ComputerSetting{
 			Computer:    computer.Computer,
 			ScanNumbers: scanNumbers,
@@ -64,7 +65,7 @@ func (uc implUseCase) ScanDouyinVideoFullPageSheduler() {
 		// Thiết lập tham số tìm kiếm Douyin Spaces
 		userScan := repository.FindDouyinOldSpacesOptions{
 			ChannelUsernames:     users,
-			ScanNumbers:          2,
+			ScanNumbers:          2, // Giới hạn số lượng quét (có thể thay đổi tùy vào yêu cầu)
 			DouyinLastScanIsZero: &douyinLastScanIsZero,
 		}
 
@@ -87,23 +88,25 @@ func (uc implUseCase) ScanDouyinVideoFullPageSheduler() {
 		}
 
 		// Xử lý từng video Douyin
-		for _, space := range douyinSpaces {
-			secUserID := strings.Replace(space.DouyinLink, "https://www.douyin.com/user/", "", -1)
-			uc.l.Infof(ctx, "Started video scan job for Douyin user %s.", secUserID)
-
-			// Thực hiện quét video Douyin (có thể sử dụng job hoặc API để xử lý)
-			// go scanDouyinVideosJob(space.Mid, secUserID, 10, false, 0, domainAPI)
-			uc.l.Info(ctx, "Running job for user:", secUserID)
-
-			data := ScanDouyinVideosInput{
-				Mid:        space.Mid,
-				SecUserID:  secUserID,
-				VideoCount: 10,
-				NewFlag:    true,
-				Group:      0,
-				DomainAPI:  cs.DomainAPI,
+		spaceArr := make([]map[string]interface{}, len(douyinSpaces))
+		for i, space := range douyinSpaces {
+			// Trích xuất channel_id từ DouyinLink
+			channelID := strings.Replace(space.DouyinLink, "https://www.douyin.com/user/", "", -1)
+			spaceArr[i] = map[string]interface{}{
+				"space_id":   space.Mid,
+				"channel_id": channelID,
 			}
-			uc.pubScanVideoNewTask(ctx, data)
+		}
+
+		// Gửi dữ liệu qua RabbitMQ
+		err = uc.pubScanVideoNewTask(ctx, ScanDouyinVideosInput{
+			ArrChannel: convertToRabbitMQArrChannel2(spaceArr),
+			IsScanFull: false,
+			Group:      1,
+		})
+		if err != nil {
+			uc.l.Errorf(ctx, "Error publishing to RabbitMQ for computer %s: %v", err)
+			continue
 		}
 
 		uc.l.Infof(ctx, "Finished processing computer: %s", cs.Computer)
