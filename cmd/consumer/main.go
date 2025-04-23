@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 
 	"reup/config"
 	"reup/internal/appconfig/mongo"
@@ -11,17 +10,15 @@ import (
 	pkgCrt "reup/pkg/encrypter"
 	pkgLog "reup/pkg/log"
 	"reup/pkg/rabbitmq"
-
-	"github.com/joho/godotenv"
 )
 
 func main() {
 
 	ctx := context.Background()
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error loading .env file con: %v", err)
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatalf("Error loading .env file con: %v", err)
+	// }
 	// Load config
 	cfg, err := config.Load()
 	if err != nil {
