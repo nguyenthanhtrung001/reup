@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/json"
 
-	rmqDelivery "reup/internal/scan_video/delivery/rabbitmq"
-	"reup/internal/scan_video/usecase"
+	rmqDelivery "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq"
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/usecase"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )

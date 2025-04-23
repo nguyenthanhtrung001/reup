@@ -4,11 +4,11 @@ import (
 	"context"
 	"time"
 
-	"reup/internal/models"
-	"reup/internal/user/repository"
-	"reup/pkg/jwt"
-	"reup/pkg/mongo"
-	"reup/pkg/paginator"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/user/repository"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
+	"github.com/nguyenthanhtrung001/reup/pkg/paginator"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

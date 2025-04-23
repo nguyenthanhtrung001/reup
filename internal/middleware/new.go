@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	userUseCase "reup/internal/user/usecase"
-	pkgCrt "reup/pkg/encrypter"
-	"reup/pkg/jwt"
-	"reup/pkg/log"
+	userUseCase "github.com/nguyenthanhtrung001/reup/internal/user/usecase"
+	pkgCrt "github.com/nguyenthanhtrung001/reup/pkg/encrypter"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/pkg/log"
 )
 
 type Middleware struct {

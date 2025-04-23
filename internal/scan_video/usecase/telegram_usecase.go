@@ -3,9 +3,10 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"reup/internal/models"
-	"reup/pkg/telegram"
 	"time"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/pkg/telegram"
 )
 
 func (uc implUseCase) filterAndSendTelegram(ctx context.Context, videos []models.BiliVideo, group int) error {

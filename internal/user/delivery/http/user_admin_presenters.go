@@ -1,10 +1,10 @@
 package http
 
 import (
-	"reup/internal/models"
-	"reup/internal/user/usecase"
-	"reup/pkg/paginator"
-	"reup/pkg/response"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/user/usecase"
+	"github.com/nguyenthanhtrung001/reup/pkg/paginator"
+	"github.com/nguyenthanhtrung001/reup/pkg/response"
 )
 
 type listRequest struct {

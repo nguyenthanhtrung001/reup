@@ -3,9 +3,10 @@ package mogo
 import (
 	"context"
 	"fmt"
-	"reup/internal/models"
-	"reup/internal/scan_video/repository"
-	"reup/pkg/mongo"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/repository"
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
 
 	"go.mongodb.org/mongo-driver/bson"
 )

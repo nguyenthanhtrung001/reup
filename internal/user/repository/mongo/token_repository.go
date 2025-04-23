@@ -1,6 +1,6 @@
 package mongo
 
-import "reup/pkg/mongo"
+import "github.com/nguyenthanhtrung001/reup/pkg/mongo"
 
 const (
 	userTokenCollection = "user_tokens"

@@ -3,10 +3,10 @@ package usecase
 import (
 	"context"
 
-	"reup/internal/models"
-	"reup/internal/user/repository"
-	"reup/pkg/encrypter"
-	"reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/user/repository"
+	"github.com/nguyenthanhtrung001/reup/pkg/encrypter"
+	"github.com/nguyenthanhtrung001/reup/pkg/log"
 )
 
 type UseCase interface {

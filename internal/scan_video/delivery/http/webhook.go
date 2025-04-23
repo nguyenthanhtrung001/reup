@@ -1,7 +1,7 @@
 package http
 
 import (
-	"reup/internal/scan_video/usecase"
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/usecase"
 
 	"github.com/gin-gonic/gin"
 )

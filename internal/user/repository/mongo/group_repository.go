@@ -3,8 +3,8 @@ package mongo
 import (
 	"context"
 
-	"reup/internal/models"
-	"reup/pkg/mongo"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"

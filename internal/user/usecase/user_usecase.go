@@ -3,9 +3,9 @@ package usecase
 import (
 	"context"
 
-	"reup/internal/models"
-	"reup/internal/user/repository"
-	"reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/user/repository"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
 )
 
 func (uc implUseCase) Register(ctx context.Context, input RegisterInput) error {

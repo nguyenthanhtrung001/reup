@@ -1,8 +1,8 @@
 package http
 
 import (
-	userUseCase "reup/internal/user/usecase"
-	"reup/pkg/log"
+	userUseCase "github.com/nguyenthanhtrung001/reup/internal/user/usecase"
+	"github.com/nguyenthanhtrung001/reup/pkg/log"
 
 	"github.com/gin-gonic/gin"
 )

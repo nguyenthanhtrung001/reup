@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"reup/pkg/jwt"
-	"reup/pkg/response"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

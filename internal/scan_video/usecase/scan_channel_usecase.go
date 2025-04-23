@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"reup/internal/models"
-	"reup/pkg/curl"
 	"time"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/pkg/curl"
 )
 
 func (uc implUseCase) ScanDouyinHomePageWithoutRequest() ([]models.DouyinScanChannel, error) {

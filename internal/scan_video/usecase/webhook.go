@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
 )
 
 func (uc implUseCase) HandleDouyinWebhook(c interface{}, data HandleDouyinWebhookInput) (int, error) {

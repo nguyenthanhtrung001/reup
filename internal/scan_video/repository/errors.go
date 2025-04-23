@@ -1,7 +1,7 @@
 package repository
 
 import (
-	pkgErrors "reup/pkg/errors"
+	pkgErrors "github.com/nguyenthanhtrung001/reup/pkg/errors"
 )
 
 var (

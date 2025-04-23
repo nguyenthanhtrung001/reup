@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"reup/internal/user/repository"
-	"reup/pkg/mongo"
+	"github.com/nguyenthanhtrung001/reup/internal/user/repository"
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
 
 	"go.mongodb.org/mongo-driver/bson"
 )

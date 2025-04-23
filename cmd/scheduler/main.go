@@ -1,14 +1,15 @@
 package main
 
 import (
-	"reup/config"
-	"reup/internal/appconfig/mongo"
-	"reup/internal/schedule"
+	"github.com/nguyenthanhtrung001/reup/config"
+	"github.com/nguyenthanhtrung001/reup/internal/appconfig/mongo"
+	"github.com/nguyenthanhtrung001/reup/internal/schedule"
 
 	"context"
-	pkgCrt "reup/pkg/encrypter"
-	pkgLog "reup/pkg/log"
-	"reup/pkg/rabbitmq"
+
+	pkgCrt "github.com/nguyenthanhtrung001/reup/pkg/encrypter"
+	pkgLog "github.com/nguyenthanhtrung001/reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/pkg/rabbitmq"
 )
 
 func main() {

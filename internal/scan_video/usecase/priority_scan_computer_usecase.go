@@ -3,7 +3,8 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"reup/internal/models"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
 )
 
 func (uc implUseCase) FindAllPriorityScanComputers(ctx context.Context) ([]models.PriorityScanComputer, error) {

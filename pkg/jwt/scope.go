@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 
-	"reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
 )
 
 // NewScope creates a new scope.

@@ -1,8 +1,8 @@
 package producer
 
 import (
-	rmqDelivery "reup/internal/scan_video/delivery/rabbitmq"
-	rmqPkg "reup/pkg/rabbitmq"
+	rmqDelivery "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq"
+	rmqPkg "github.com/nguyenthanhtrung001/reup/pkg/rabbitmq"
 )
 
 // Run runs the producer

@@ -1,6 +1,6 @@
 package rabbitmq
 
-import "reup/pkg/rabbitmq"
+import "github.com/nguyenthanhtrung001/reup/pkg/rabbitmq"
 
 const (
 	ScanVideoNewExcName = "scan_video_new_exc"

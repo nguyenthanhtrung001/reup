@@ -5,10 +5,11 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"reup/internal/models"
 	"time"
 
-	"reup/pkg/mongo"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
 
 	"go.mongodb.org/mongo-driver/bson"
 	mog "go.mongodb.org/mongo-driver/mongo"

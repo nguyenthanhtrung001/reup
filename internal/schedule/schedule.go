@@ -5,14 +5,15 @@ import (
 	"os"
 	"os/signal"
 
-	scanVideoJob "reup/internal/scan_video/delivery/job"
-	scanVideoProd "reup/internal/scan_video/delivery/rabbitmq/producer"
-	scanVideoMongo "reup/internal/scan_video/repository/mongo"
-	scanVideoUsecase "reup/internal/scan_video/usecase"
-	"reup/pkg/cron"
-	"reup/pkg/jwt"
-	"reup/pkg/telegram"
 	"syscall"
+
+	scanVideoJob "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/job"
+	scanVideoProd "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq/producer"
+	scanVideoMongo "github.com/nguyenthanhtrung001/reup/internal/scan_video/repository/mongo"
+	scanVideoUsecase "github.com/nguyenthanhtrung001/reup/internal/scan_video/usecase"
+	"github.com/nguyenthanhtrung001/reup/pkg/cron"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/pkg/telegram"
 )
 
 func (s Scheduler) Start() error {

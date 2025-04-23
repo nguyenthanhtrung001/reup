@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 
-	"reup/config"
-	"reup/internal/appconfig/mongo"
-	"reup/internal/appconfig/redis"
-	"reup/internal/consumer"
-	pkgCrt "reup/pkg/encrypter"
-	pkgLog "reup/pkg/log"
-	"reup/pkg/rabbitmq"
+	"github.com/nguyenthanhtrung001/reup/config"
+	"github.com/nguyenthanhtrung001/reup/internal/appconfig/mongo"
+	"github.com/nguyenthanhtrung001/reup/internal/appconfig/redis"
+	"github.com/nguyenthanhtrung001/reup/internal/consumer"
+	pkgCrt "github.com/nguyenthanhtrung001/reup/pkg/encrypter"
+	pkgLog "github.com/nguyenthanhtrung001/reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/pkg/rabbitmq"
 )
 
 func main() {

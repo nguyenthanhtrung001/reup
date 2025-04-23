@@ -2,13 +2,14 @@ package usecase
 
 import (
 	"context"
-	prod "reup/internal/scan_video/delivery/rabbitmq/producer"
-	"reup/internal/scan_video/repository"
 
-	"reup/internal/models"
-	"reup/pkg/encrypter"
-	"reup/pkg/log"
-	"reup/pkg/telegram"
+	prod "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq/producer"
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/repository"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/pkg/encrypter"
+	"github.com/nguyenthanhtrung001/reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/pkg/telegram"
 )
 
 type UseCase interface {

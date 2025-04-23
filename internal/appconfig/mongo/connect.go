@@ -6,9 +6,9 @@ import (
 	"log"
 	"time"
 
-	"reup/config"
-	pkgCrt "reup/pkg/encrypter"
-	"reup/pkg/mongo"
+	"github.com/nguyenthanhtrung001/reup/config"
+	pkgCrt "github.com/nguyenthanhtrung001/reup/pkg/encrypter"
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
 )
 
 const (

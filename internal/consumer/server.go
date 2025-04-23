@@ -3,19 +3,19 @@ package consumer
 import (
 	"context"
 
-	"reup/pkg/jwt"
-	"reup/pkg/log"
-	"reup/pkg/mongo"
-	"reup/pkg/rabbitmq"
-	"reup/pkg/redis"
-	"reup/pkg/telegram"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
+	"github.com/nguyenthanhtrung001/reup/pkg/rabbitmq"
+	"github.com/nguyenthanhtrung001/reup/pkg/redis"
+	"github.com/nguyenthanhtrung001/reup/pkg/telegram"
 
-	scanVideoConsumer "reup/internal/scan_video/delivery/rabbitmq/consumer"
-	scanVideoProd "reup/internal/scan_video/delivery/rabbitmq/producer"
-	scanVideoMongo "reup/internal/scan_video/repository/mongo"
-	scanVideoUseCase "reup/internal/scan_video/usecase"
+	scanVideoConsumer "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq/consumer"
+	scanVideoProd "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq/producer"
+	scanVideoMongo "github.com/nguyenthanhtrung001/reup/internal/scan_video/repository/mongo"
+	scanVideoUseCase "github.com/nguyenthanhtrung001/reup/internal/scan_video/usecase"
 
-	pkgCrt "reup/pkg/encrypter"
+	pkgCrt "github.com/nguyenthanhtrung001/reup/pkg/encrypter"
 )
 
 // Server is the consumer server

@@ -2,9 +2,10 @@ package producer
 
 import (
 	"context"
-	rabb "reup/internal/scan_video/delivery/rabbitmq"
-	pkgLog "reup/pkg/log"
-	"reup/pkg/rabbitmq"
+
+	rabb "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq"
+	pkgLog "github.com/nguyenthanhtrung001/reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/pkg/rabbitmq"
 )
 
 type Producer interface {

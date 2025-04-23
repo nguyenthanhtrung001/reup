@@ -1,10 +1,10 @@
 package mongo
 
 import (
-	"reup/internal/user/repository"
-	"reup/pkg/jwt"
-	"reup/pkg/log"
-	"reup/pkg/mongo"
+	"github.com/nguyenthanhtrung001/reup/internal/user/repository"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
 )
 
 type implRepository struct {

@@ -1,7 +1,7 @@
 package job
 
 import (
-	"reup/pkg/cron"
+	"github.com/nguyenthanhtrung001/reup/pkg/cron"
 )
 
 func (h Handler) Register() []cron.JobInfo {

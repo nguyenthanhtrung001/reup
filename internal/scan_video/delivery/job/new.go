@@ -1,9 +1,9 @@
 package job
 
 import (
-	"reup/internal/scan_video/usecase"
-	"reup/pkg/cron"
-	pkgLog "reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/usecase"
+	"github.com/nguyenthanhtrung001/reup/pkg/cron"
+	pkgLog "github.com/nguyenthanhtrung001/reup/pkg/log"
 )
 
 type Handler struct {

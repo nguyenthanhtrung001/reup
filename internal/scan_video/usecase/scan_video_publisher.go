@@ -2,7 +2,8 @@ package usecase
 
 import (
 	"context"
-	"reup/internal/scan_video/delivery/rabbitmq"
+
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq"
 )
 
 func (uc implUseCase) pubScanVideoNewTask(ctx context.Context, msg ScanDouyinVideosInput) error {

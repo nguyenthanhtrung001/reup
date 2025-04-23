@@ -3,8 +3,9 @@ package producer
 import (
 	"context"
 	"encoding/json"
-	rabb "reup/internal/scan_video/delivery/rabbitmq"
-	"reup/pkg/rabbitmq"
+
+	rabb "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq"
+	"github.com/nguyenthanhtrung001/reup/pkg/rabbitmq"
 )
 
 func (p implProducer) PubScanVideoNew(ctx context.Context, msg rabb.ScanDouyinVideosMsg) error {

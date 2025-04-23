@@ -3,7 +3,7 @@ package redis
 import (
 	"time"
 
-	"reup/config"
+	"github.com/nguyenthanhtrung001/reup/config"
 
 	"github.com/redis/go-redis/v9"
 )

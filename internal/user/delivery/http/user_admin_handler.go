@@ -1,12 +1,12 @@
 package http
 
 import (
-	"reup/internal/models"
-	"reup/internal/user/usecase"
-	pkgErrors "reup/pkg/errors"
-	"reup/pkg/jwt"
-	"reup/pkg/paginator"
-	"reup/pkg/response"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/user/usecase"
+	pkgErrors "github.com/nguyenthanhtrung001/reup/pkg/errors"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/pkg/paginator"
+	"github.com/nguyenthanhtrung001/reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

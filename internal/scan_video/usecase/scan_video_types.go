@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
 )
 
 type DouyinVideo struct {

@@ -3,9 +3,10 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"reup/internal/models"
-	"reup/internal/scan_video/repository"
 	"time"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/repository"
 )
 
 func (uc implUseCase) FindDouyinOldSpaces(ctx context.Context, input *FindDouyinOldSpacesInput) ([]models.BiliSpace, error) {

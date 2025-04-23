@@ -3,9 +3,9 @@ package middleware
 import (
 	"log"
 
-	"reup/pkg/response"
+	"github.com/nguyenthanhtrung001/reup/pkg/response"
 
-	"reup/pkg/telegram"
+	"github.com/nguyenthanhtrung001/reup/pkg/telegram"
 
 	"github.com/gin-gonic/gin"
 )

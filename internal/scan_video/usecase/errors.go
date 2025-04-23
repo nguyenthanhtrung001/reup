@@ -1,6 +1,6 @@
 package usecase
 
-import pkgErrors "reup/pkg/errors"
+import pkgErrors "github.com/nguyenthanhtrung001/reup/pkg/errors"
 
 var (
 	ErrPackageConfirmed = pkgErrors.NewHTTPError(1000, "package already confirmed")

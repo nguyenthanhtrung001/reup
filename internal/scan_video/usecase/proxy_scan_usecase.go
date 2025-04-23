@@ -2,7 +2,8 @@ package usecase
 
 import (
 	"context"
-	"reup/internal/models"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
 )
 
 func (uc implUseCase) DoneAllProxyScan(ctx context.Context) error {

@@ -1,7 +1,7 @@
 package http
 
 import (
-	"reup/internal/middleware"
+	"github.com/nguyenthanhtrung001/reup/internal/middleware"
 
 	"github.com/gin-gonic/gin"
 )

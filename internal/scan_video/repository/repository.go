@@ -2,7 +2,8 @@ package repository
 
 import (
 	"context"
-	"reup/internal/models"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
 )
 
 type Repository interface {

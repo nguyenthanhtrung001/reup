@@ -3,7 +3,7 @@ package repository
 import (
 	"time"
 
-	"reup/pkg/paginator"
+	"github.com/nguyenthanhtrung001/reup/pkg/paginator"
 )
 
 type RegisterOptions struct {

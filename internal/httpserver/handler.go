@@ -3,26 +3,27 @@ package httpserver
 import (
 	"context"
 	"net/http"
-	"reup/pkg/jwt"
-	"reup/pkg/telegram"
 
-	scanVideoHTTP "reup/internal/scan_video/delivery/http"
-	userHTTP "reup/internal/user/delivery/http"
+	"github.com/nguyenthanhtrung001/reup/pkg/jwt"
+	"github.com/nguyenthanhtrung001/reup/pkg/telegram"
 
-	scanVideoRepo "reup/internal/scan_video/repository/mongo"
-	userRepo "reup/internal/user/repository/mongo"
+	scanVideoHTTP "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/http"
+	userHTTP "github.com/nguyenthanhtrung001/reup/internal/user/delivery/http"
 
-	scanVideoUseCase "reup/internal/scan_video/usecase"
-	userUseCase "reup/internal/user/usecase"
+	scanVideoRepo "github.com/nguyenthanhtrung001/reup/internal/scan_video/repository/mongo"
+	userRepo "github.com/nguyenthanhtrung001/reup/internal/user/repository/mongo"
 
-	"reup/internal/middleware"
+	scanVideoUseCase "github.com/nguyenthanhtrung001/reup/internal/scan_video/usecase"
+	userUseCase "github.com/nguyenthanhtrung001/reup/internal/user/usecase"
 
-	scanVideoProd "reup/internal/scan_video/delivery/rabbitmq/producer"
+	"github.com/nguyenthanhtrung001/reup/internal/middleware"
+
+	scanVideoProd "github.com/nguyenthanhtrung001/reup/internal/scan_video/delivery/rabbitmq/producer"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	// _ "reup/docs"
+	// _ "github.com/nguyenthanhtrung001/reup/docs"
 )
 
 func (srv HTTPServer) mapHandlers() {

@@ -3,7 +3,7 @@
 package mocks
 
 import (
-	mongo "reup/pkg/mongo"
+	mongo "github.com/nguyenthanhtrung001/reup/pkg/mongo"
 
 	mock "github.com/stretchr/testify/mock"
 )

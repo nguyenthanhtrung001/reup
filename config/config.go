@@ -1,6 +1,11 @@
 package config
 
-import "github.com/caarlos0/env/v9"
+import (
+	"log"
+
+	"github.com/caarlos0/env/v9"
+	"github.com/joho/godotenv"
+)
 
 type Config struct {
 	HTTPServer     HTTPServerConfig
@@ -66,10 +71,16 @@ type TeleChatIDs struct {
 }
 
 func Load() (*Config, error) {
+	// Load .env file
+	if err := godotenv.Load(); err != nil {
+		log.Printf("Error loading .env file: %v", err)
+	}
+
 	cfg := &Config{}
 	err := env.Parse(cfg)
 	if err != nil {
 		return nil, err
 	}
+
 	return cfg, nil
 }

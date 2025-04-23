@@ -3,7 +3,8 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"reup/internal/scan_video/repository"
+
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/repository"
 )
 
 func (uc implUseCase) GetChannelGroupsByComputer(ctx context.Context) ([]repository.ChannelGroup, error) {

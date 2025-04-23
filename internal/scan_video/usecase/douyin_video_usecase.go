@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"reup/internal/models"
-	"reup/internal/scan_video/repository"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/repository"
 )
 
 func (uc implUseCase) CheckDouyinVideoExists(ctx context.Context, videoID string) bool {

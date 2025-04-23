@@ -1,11 +1,11 @@
 package schedule
 
 import (
-	"reup/pkg/cron"
-	pkgCrt "reup/pkg/encrypter"
-	pkgLog "reup/pkg/log"
-	"reup/pkg/mongo"
-	"reup/pkg/rabbitmq"
+	"github.com/nguyenthanhtrung001/reup/pkg/cron"
+	pkgCrt "github.com/nguyenthanhtrung001/reup/pkg/encrypter"
+	pkgLog "github.com/nguyenthanhtrung001/reup/pkg/log"
+	"github.com/nguyenthanhtrung001/reup/pkg/mongo"
+	"github.com/nguyenthanhtrung001/reup/pkg/rabbitmq"
 )
 
 type Scheduler struct {

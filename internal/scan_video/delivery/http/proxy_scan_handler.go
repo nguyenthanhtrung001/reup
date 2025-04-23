@@ -3,7 +3,8 @@ package http
 import (
 	"fmt"
 	"net/http"
-	"reup/pkg/response"
+
+	"github.com/nguyenthanhtrung001/reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )

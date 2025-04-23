@@ -8,9 +8,9 @@ import (
 	"runtime"
 	"strings"
 
-	pkgErrors "reup/pkg/errors"
+	pkgErrors "github.com/nguyenthanhtrung001/reup/pkg/errors"
 
-	"reup/pkg/telegram"
+	"github.com/nguyenthanhtrung001/reup/pkg/telegram"
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"

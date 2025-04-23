@@ -3,7 +3,7 @@ package response
 import (
 	"log"
 
-	"reup/pkg/telegram"
+	"github.com/nguyenthanhtrung001/reup/pkg/telegram"
 
 	"github.com/gin-gonic/gin"
 )

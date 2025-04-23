@@ -3,7 +3,7 @@ package jwt
 import (
 	"context"
 
-	"reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/models"
 )
 
 type PayloadCtxKey struct{}

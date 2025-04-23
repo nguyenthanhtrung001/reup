@@ -3,9 +3,10 @@ package usecase
 import (
 	"context"
 
-	"reup/internal/models"
-	"reup/internal/scan_video/repository"
 	"strings"
+
+	"github.com/nguyenthanhtrung001/reup/internal/models"
+	"github.com/nguyenthanhtrung001/reup/internal/scan_video/repository"
 )
 
 func (uc implUseCase) ScanDouyinVideoSheduler() {
