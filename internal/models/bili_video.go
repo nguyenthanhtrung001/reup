@@ -3,7 +3,7 @@ package models
 import "time"
 
 type BiliVideo struct {
-	VideoID           string    `bson:"video_id"`
+	VideoID           int64     `bson:"video_id"`
 	Mid               int64     `bson:"mid"`
 	VideoThumb        string    `bson:"video_thumb"`
 	UploadTitle       string    `bson:"upload_title"`

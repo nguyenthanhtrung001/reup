@@ -14,8 +14,11 @@ type Repository interface {
 	ScanChannelRepo
 	VideoWebHookRepo
 	ProxyScanRepo
+	Upload
 }
-
+type Upload interface {
+	GetQuest(ctx context.Context, computer string) (*models.BiliVideo, map[string]interface{}, error)
+}
 type BiliSpaceRepo interface {
 	FindDouyinOldSpaces(ctx context.Context, opts *FindDouyinOldSpacesOptions) ([]models.BiliSpace, error)
 	CreateBiliSpace(ctx context.Context, input CreateBiliSpaceInput) (*models.BiliSpace, error)

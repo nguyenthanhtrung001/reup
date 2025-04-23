@@ -12,5 +12,7 @@ func MapProxyRoutes(r *gin.RouterGroup, h Handler, mw middleware.Middleware) {
 	r.POST("/done-proxy", h.DoneProxyScan)
 	r.GET("/proxy-all", h.GetAllProxyScan)
 	r.GET("/proxy", h.GetProxyScanRandom)
+
 	r.POST("/insert-proxy", h.InsertProxyScan)
+	r.GET("/test", h.GetQuestHandler)
 }

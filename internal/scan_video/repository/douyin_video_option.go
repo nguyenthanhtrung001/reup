@@ -3,7 +3,7 @@ package repository
 import "time"
 
 type CreateBiliVideoInput struct {
-	VideoID           string    `json:"video_id" bson:"video_id"`
+	VideoID           int64     `json:"video_id" bson:"video_id"`
 	Mid               int64     `json:"mid" bson:"mid"`
 	VideoThumb        string    `json:"video_thumb" bson:"video_thumb"`
 	UploadTitle       string    `json:"upload_title" bson:"upload_title"`

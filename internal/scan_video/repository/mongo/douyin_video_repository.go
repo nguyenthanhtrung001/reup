@@ -77,7 +77,7 @@ func (repo implRepository) InsertBiliVideos(ctx context.Context, videos []models
 	var interfaceVideos []interface{}
 	for _, video := range videos {
 		// Kiểm tra nếu video là nil hoặc có trường quan trọng không hợp lệ
-		if video.Mid == 0 || video.VideoID == "" {
+		if video.Mid == 0 {
 			return fmt.Errorf("invalid video data: missing required fields (Mid or DouyinLink)")
 		}
 

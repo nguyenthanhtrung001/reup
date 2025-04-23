@@ -21,6 +21,8 @@ type ProxySxanHandler interface {
 	GetAllProxyScan(c *gin.Context)
 	GetProxyScanRandom(c *gin.Context)
 	InsertProxyScan(c *gin.Context)
+
+	GetQuestHandler(c *gin.Context)
 }
 
 type handler struct {

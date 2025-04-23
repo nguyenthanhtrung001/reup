@@ -28,7 +28,9 @@ func (r implRepository) GetExistingVideoIds(ctx context.Context, videoIds []stri
 		if err := cursor.Decode(&video); err != nil {
 			return nil, fmt.Errorf("error decoding video data: %v", err)
 		}
-		existingVideoIds[video.VideoID] = struct{}{}
+		// check
+		videoId := fmt.Sprintf("%d", video.VideoID)
+		existingVideoIds[videoId] = struct{}{}
 	}
 
 	return existingVideoIds, nil

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"log"
+	"strconv"
 	"strings"
 	"time"
 
@@ -31,7 +32,7 @@ func (uc implUseCase) HandleDouyinWebhook(c interface{}, data HandleDouyinWebhoo
 		if !contains(existingVideos, video.AwemeID) {
 			tags := extractTags(video.VideoTag)
 			videoObj := models.BiliVideo{
-				VideoID:           video.AwemeID,
+				VideoID:           convertStringToInt64(video.AwemeID),
 				Mid:               billiSpace.Mid,
 				VideoThumb:        video.CoverURL,
 				UploadTitle:       video.Description,
@@ -77,6 +78,15 @@ func extractVideoIds(posts []VideoData) []string {
 func contains(videoMap map[string]struct{}, item string) bool {
 	_, exists := videoMap[item]
 	return exists
+}
+
+func convertStringToInt64(s string) int64 {
+	id, err := strconv.ParseInt(s, 10, 64)
+	if err != nil {
+		log.Printf("Error converting string to int64: %v", err)
+		return 0
+	}
+	return id
 }
 
 func extractTags(tags []TagData) string {

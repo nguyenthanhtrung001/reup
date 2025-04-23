@@ -61,6 +61,7 @@ type ProxyScan interface {
 	GetAllProxyScan(ctx context.Context) ([]models.ProxyScan, error)
 	GetProxyScanRandom(ctx context.Context) (*models.ProxyScan, error)
 	InsertProxyScan(ctx context.Context, ProxyIP string) error
+	GetQuest(ctx context.Context, computer string) (*models.BiliVideo, map[string]interface{}, error)
 }
 type implUseCase struct {
 	l         log.Logger

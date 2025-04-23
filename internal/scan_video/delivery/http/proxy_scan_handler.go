@@ -1,6 +1,8 @@
 package http
 
 import (
+	"fmt"
+	"net/http"
 	"reup/pkg/response"
 
 	"github.com/gin-gonic/gin"
@@ -87,4 +89,48 @@ func (h handler) InsertProxyScan(c *gin.Context) {
 		return
 	}
 	response.OK(c, "insert proxy scan")
+}
+
+func (h handler) GetQuestHandler(c *gin.Context) {
+	computer := c.Query("computer")
+	if computer == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "computer param is required"})
+		return
+	}
+
+	video, userProxyInfo, err := h.uc.GetQuest(c.Request.Context(), computer)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Chuyển đổi dữ liệu video từ MongoDB sang định dạng mong muốn
+	response := gin.H{
+		"success": true,
+		"data": gin.H{
+			"video_id":           fmt.Sprintf("%v", video.VideoID), // Nếu VideoID là số thì chuyển thành string
+			"mid":                video.Mid,
+			"video_thumb":        video.VideoThumb,
+			"upload_title":       video.UploadTitle,
+			"upload_description": video.UploadDescription,
+			"upload_keyword":     video.UploadKeyword,
+			"duration":           video.Duration,
+			"date_make":          video.DateMake.Format("2006-01-02 15:04:05"), // Đảm bảo đúng định dạng
+			"count_get":          video.CountGet,
+			"next":               video.Next,
+			"download_fail":      video.DownloadFail,
+			"type":               video.Type,
+			"updated_at":         video.UpdatedAt.Format("2006-01-02T15:04:05.000000Z"), // Đảm bảo đúng định dạng
+			"created_at":         video.CreatedAt.Format("2006-01-02T15:04:05.000000Z"),
+			"download_url":       video.DownloadURL,
+			"tags":               video.Tags,                                                    // Nếu không có tags, trả về null
+			"video_link":         fmt.Sprintf("https://www.douyin.com/video/%v", video.VideoID), // Tạo link video Douyin
+			"check_copyright":    0,                                                             // Bạn có thể điều chỉnh thêm các giá trị nếu cần
+			"username":           userProxyInfo["username"],                                     // Bạn có thể thay bằng tên người dùng thực tế
+			"proxy_ip":           userProxyInfo["proxy"],                                        // Cập nhật nếu cần
+			"ads":                0,
+		},
+	}
+
+	c.JSON(http.StatusOK, response)
 }
