@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	priorityCollection = "priority_scan_computers"
+	priorityCollection = "priority_scan_computer"
 )
 
 func (repo implRepository) getPriorityCollection() mongo.Collection {

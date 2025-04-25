@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	douyinVideoCollection = "douyin_video"
+	douyinVideoCollection = "bili_video"
 )
 
 func (repo implRepository) getDouyinVideoCollection() mongo.Collection {
