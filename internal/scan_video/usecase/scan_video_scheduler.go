@@ -94,11 +94,14 @@ func (uc implUseCase) ScanDouyinVideoSheduler() {
 				"channel_id": channelID,
 			}
 		}
-		err = uc.pubScanVideoOldTask(ctx, ScanDouyinVideosInput{
-			ArrChannel: convertToRabbitMQArrChannel2(spaceArr),
+		input := ScanDouyinVideosInput{
+			ArrChannel: convertToArrayDataSendScan(spaceArr),
 			IsScanFull: false, // Cập nhật flag quét đầy đủ tùy theo yêu cầu
-			Group:      1,     // Có thể thay đổi nhóm nếu cần
-		})
+			Group:      1,
+		}
+
+		err = uc.SentScanDouyinVideos(input.ArrChannel, input.IsScanFull)
+
 		if err != nil {
 			uc.l.Errorf(ctx, "Error publishing to RabbitMQ for computer %s: %v", err)
 			continue

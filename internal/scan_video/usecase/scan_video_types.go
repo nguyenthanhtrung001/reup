@@ -80,7 +80,7 @@ func (uc implUseCase) createDomainMap(settings []models.PriorityScanComputer) ma
 }
 
 // convertToRabbitMQArrChannel converts a slice of map[string]interface{} to a slice of rabbitmq.ArrChannel
-func convertToRabbitMQArrChannel2(channels []map[string]interface{}) []ArrChannel {
+func convertToArrayDataSendScan(channels []map[string]interface{}) []ArrChannel {
 	result := make([]ArrChannel, len(channels))
 	for i, ch := range channels {
 

@@ -71,11 +71,14 @@ func (uc implUseCase) ScanDouyinVideoManualSheduler() {
 	if len(scanAllVideosArr) > 0 {
 		uc.l.Infof(ctx, "Dispatching job to scan all videos with %d entries.", len(scanAllVideosArr))
 		// Gửi tác vụ quét tất cả video
-		err = uc.pubScanVideoManualTask(ctx, ScanDouyinVideosInput{
-			ArrChannel: convertToRabbitMQArrChannel2(scanAllVideosArr),
+		input := ScanDouyinVideosInput{
+			ArrChannel: convertToArrayDataSendScan(scanAllVideosArr),
 			IsScanFull: true, // Cập nhật flag quét đầy đủ tùy theo yêu cầu
-			Group:      1,    // Có thể thay đổi nhóm nếu cần
-		})
+			Group:      1,
+		}
+
+		err = uc.SentScanDouyinVideos(input.ArrChannel, input.IsScanFull)
+
 		if err != nil {
 			uc.l.Errorf(ctx, "Error publishing to RabbitMQ for scan all videos: %v", err)
 		}
@@ -84,11 +87,14 @@ func (uc implUseCase) ScanDouyinVideoManualSheduler() {
 	if len(scanNewVideosArr) > 0 {
 		uc.l.Infof(ctx, "Dispatching job to scan new videos with %d entries.", len(scanNewVideosArr))
 		// Gửi tác vụ quét video mới
-		err = uc.pubScanVideoManualTask(ctx, ScanDouyinVideosInput{
-			ArrChannel: convertToRabbitMQArrChannel2(scanNewVideosArr),
+		input := ScanDouyinVideosInput{
+			ArrChannel: convertToArrayDataSendScan(scanNewVideosArr),
 			IsScanFull: false, // Cập nhật flag quét đầy đủ tùy theo yêu cầu
-			Group:      1,     // Có thể thay đổi nhóm nếu cần
-		})
+			Group:      1,
+		}
+
+		err = uc.SentScanDouyinVideos(input.ArrChannel, input.IsScanFull)
+
 		if err != nil {
 			uc.l.Errorf(ctx, "Error publishing to RabbitMQ for scan new videos: %v", err)
 		}

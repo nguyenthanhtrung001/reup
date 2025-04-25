@@ -7,7 +7,7 @@ import (
 func (h Handler) Register() []cron.JobInfo {
 	return []cron.JobInfo{
 		{CronTime: "* * * * *", Handler: h.JobScanVideo},
-		// {CronTime: "* * * * *", Handler: h.JobScanVideoFullPage},
-		// {CronTime: "* * * * *", Handler: h.JobScanVideoManual},
+		{CronTime: "* * * * *", Handler: h.JobScanVideoFullPage},
+		{CronTime: "* * * * *", Handler: h.JobScanVideoManual},
 	}
 }

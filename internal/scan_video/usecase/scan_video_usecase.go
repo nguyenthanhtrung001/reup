@@ -10,7 +10,7 @@ import (
 
 // Function gửi yêu cầu quét Douyin videos
 func (uc implUseCase) SentScanDouyinVideos(spaceArr []ArrChannel, isFull bool) error {
-	apiURL := "http://10.10.10.189:6080111/api/v1/post/scan"
+	apiURL := "http://10.10.10.189:6080/api/v1/post/scan"
 
 	apiKey := "za1eabkdme138d37e1k76koetza51"
 
